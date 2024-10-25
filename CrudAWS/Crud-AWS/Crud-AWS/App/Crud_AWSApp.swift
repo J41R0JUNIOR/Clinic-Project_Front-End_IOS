@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct Crud_AWSApp: App {
+    @Bindable var router = Router.shared
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack(path: $router.path) {
+                ContentView()
+                    .environmentObject(router)
+                    .navigationDestination(for: RoutePath.self) { route in
+                        route.findPath()
+                    }
+            }
         }
     }
 }

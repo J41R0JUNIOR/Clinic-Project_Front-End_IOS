@@ -17,7 +17,7 @@ enum APIError: Error{
 
 import Foundation
 
-
+@Observable
 class CallApi: ObservableObject {
     
     static var shared = CallApi()

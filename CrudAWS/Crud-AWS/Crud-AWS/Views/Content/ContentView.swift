@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var api: CallApi
+    @EnvironmentObject var router: Router
     var body: some View {
-        PatientList()
+        VStack{
+            Button("Show Patients"){
+                router.push(.patientList)
+            }
+        }
     }
 }
 
 #Preview {
-    ContentView().environmentObject(CallApi())
+    ContentView()
 }

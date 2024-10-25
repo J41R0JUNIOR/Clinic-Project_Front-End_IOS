@@ -1,31 +1,57 @@
-//
-//  SwiftUIView.swift
-//  Crud-AWS
-//
-//  Created by Jairo Júnior on 25/10/24.
-//
-
 import SwiftUI
 
 struct PatientList: View {
-    @StateObject var api = CallApi.shared
+    @Bindable private var api = CallApi.shared
+    @EnvironmentObject var router: Router
+    @State private var isLoading = true
+    @State private var errorMessage: String?
+
     var body: some View {
         VStack {
+            Text("Patients list")
+                .font(.headline)
+            Spacer()
             
-            List(api.patients){ patient in
-                Text(patient.name ?? "none")
-
+            if isLoading {
+                ProgressView("Loading...")
+                
+                Spacer()
+                
+            } else if let errorMessage = errorMessage {
+                Text("Erro: \(errorMessage)")
+                    .foregroundColor(.red)
+                
+            } else {
+                List(api.patients) { patient in
+                    Button{
+                        
+                    } label: {
+                        Text(patient.name ?? "Nome indisponível")
+                            .padding(.vertical, 4)
+                    }
+                }
+                .listStyle(PlainListStyle())
             }
-        }.onAppear{
+        }
+        .onAppear {
             Task {
-                try await api.getAllPatients()
+                await loadPatients()
             }
-            
         }
         .padding()
+    }
+
+    private func loadPatients() async {
+        do {
+            try await api.getAllPatients()
+            isLoading = false
+        } catch {
+            errorMessage = error.localizedDescription
+            isLoading = false
+        }
     }
 }
 
 #Preview {
-    PatientList()
+    PatientList().environmentObject(Router.shared)
 }
