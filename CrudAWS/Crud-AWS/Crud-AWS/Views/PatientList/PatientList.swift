@@ -60,7 +60,6 @@ struct PatientList: View {
         do {
             if let patients: [Patient] = try await api.getAllPatients(){
                 self.patientsLoaded = patients
-                print(patients)
             }
             isLoading = false
         } catch {

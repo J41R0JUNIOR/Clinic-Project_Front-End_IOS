@@ -20,8 +20,6 @@ class CallApi: ObservableObject {
     
     static var shared = CallApi()
     
-    
-    
     func getAllPatients<T: Decodable>() async  throws -> T? {
         
         guard let url = URL(string: URLs.getAllPatients.rawValue) else {
@@ -37,19 +35,14 @@ class CallApi: ObservableObject {
             throw APIError.invalidResponse
         }
         
-  
-//            let patients = try JSONDecoder().decode([Patient].self, from: data)
-//            self.patients = patients
-//            return patients
         return try decode(content: data)
         
     }
     
-    func getPatientById(id: String) async throws -> Patient {
+    func getPatientById<T: Decodable>(id: String) async throws -> T? {
         guard let url = URL(string: "\(URLs.getPatientById.rawValue)/\(id)") else {
             throw APIError.invalidURL
         }
-        print("getbyid : \(url)")
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
@@ -59,12 +52,7 @@ class CallApi: ObservableObject {
             throw APIError.invalidResponse
         }
         
-        do {
-            return try JSONDecoder().decode(Patient.self, from: data)
-           
-        } catch {
-            throw APIError.invalidData
-        }
+        return try decode(content: data)
     }
 
     func createPatient(patient: Patient) async throws {
@@ -109,14 +97,13 @@ class CallApi: ObservableObject {
         guard let url = URL(string: "\(URLs.getPatientById.rawValue)\(id)") else {
             throw APIError.invalidURL
         }
-        print("delete : \(url)")
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
     
         let (_, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            print("Erro")
+            throw APIError.invalidResponse
         }
     }
     

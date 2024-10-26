@@ -42,7 +42,9 @@ struct InfoPatient: View {
                     if let patientID = self.patientInfo.id{
                         try await api.updatePatient(id: patientID, patient: patientInfo)
                         
-                        self.patientInfo = try await api.getPatientById(id: patientID)
+                        if let patientInfo:Patient = try await api.getPatientById(id: patientID){
+                            self.patientInfo = patientInfo
+                        }
                     }
                 }
             } label: {
