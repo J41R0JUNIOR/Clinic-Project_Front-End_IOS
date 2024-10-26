@@ -83,7 +83,7 @@ struct InfoPatient: View {
             
             Button {
                 Task {
-                    try await api.deleteData(urlString: URLs.getPatientById(id: patientInfo.id!).url)
+                    try await api.deleteData(urlString: URLs.deletePatient(id: patientInfo.id!).url)
                 }
                 router.pop()
             } label: {
