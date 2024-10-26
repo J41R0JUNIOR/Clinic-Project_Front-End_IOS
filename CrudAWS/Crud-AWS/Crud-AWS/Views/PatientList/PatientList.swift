@@ -46,6 +46,11 @@ struct PatientList: View {
                 await loadPatients()
             }
         }
+        .onDisappear {
+            Task {
+                await loadPatients()
+            }
+        }
         .padding()
     }
 

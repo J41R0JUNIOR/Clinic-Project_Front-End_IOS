@@ -7,8 +7,8 @@
 
 enum URLs: String {
     case getAllPatients = "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patients/allPatients"
-    case deletePatient = "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patient/"
     case createPatient = "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patients"
+    case getPatientById = "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patient/"
     case updatePatient = "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patients/"
 }
 
@@ -46,6 +46,28 @@ class CallApi: ObservableObject {
             let patients = try JSONDecoder().decode([Patient].self, from: data)
             self.patients = patients
             return patients
+        } catch {
+            throw APIError.invalidData
+        }
+    }
+    
+    func getPatientById(id: String) async throws -> Patient {
+        guard let url = URL(string: "\(URLs.getPatientById.rawValue)/\(id)") else {
+            throw APIError.invalidURL
+        }
+        print("getbyid : \(url)")
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw APIError.invalidResponse
+        }
+        
+        do {
+            return try JSONDecoder().decode(Patient.self, from: data)
+           
         } catch {
             throw APIError.invalidData
         }
@@ -90,10 +112,10 @@ class CallApi: ObservableObject {
     }
     
     func deletePatient(id: String) async throws {
-        guard let url = URL(string: "\(URLs.deletePatient.rawValue)\(id)") else {
+        guard let url = URL(string: "\(URLs.getPatientById.rawValue)\(id)") else {
             throw APIError.invalidURL
         }
-        
+        print("delete : \(url)")
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
     
