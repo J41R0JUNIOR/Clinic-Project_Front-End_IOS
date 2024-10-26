@@ -1,88 +1,52 @@
-# Clinic Project
+# App-Crud-Login-IOS
 
-Este projeto é um aplicativo de clínica que gerencia pacientes, médicos e consultas. Ele consiste em duas partes principais:
+Este repositório contém o front-end do aplicativo de clínica, desenvolvido em Swift e SwiftUI. O aplicativo gerencia pacientes, médicos, consultas e autenticação de usuários.
 
 ## Estrutura do Projeto
 
-1. **App-Crud-Login-IOS**: 
-   - Implementação do front-end para iOS.
-   - Funcionalidades para gerenciar pacientes, médicos, consultas e autenticação de usuários.
-
-2. **App-Crud-Login-Back-End**: 
-   - Implementação do back-end em JavaScript.
-   - APIs RESTful para operações CRUD utilizando serviços da AWS.
-
-## Funcionalidades
-
-### Front-end (iOS)
-- Gerenciamento de pacientes, médicos e consultas.
-- Autenticação de usuários para acesso seguro.
-
-### Back-end
-- Endpoints da API RESTful para:
-  - Criar, ler, atualizar e excluir informações de pacientes.
-- Utiliza:
-  - **AWS Lambda** para funções serverless.
-  - **DynamoDB** para armazenamento de dados.
-  - **API Gateway** para expor as APIs.
+- **Models**: Definições dos modelos de dados.
+- **Views**: Principais views da aplicação.
+- **ViewModels**: Lógicas de negócio.
+- **Services**: Interação com o back-end.
+- **Resources**: Imagens e outros recursos.
 
 ## Tecnologias
 
-- **Front-end**: Swift, SwiftUI
-- **Back-end**: JavaScript, Node.js, AWS SDK, DynamoDB, Lambda, API Gateway
+- **Linguagem**: Swift
+- **Framework**: SwiftUI
 
 ## Como Executar
 
-Para clonar e configurar o projeto da clínica, siga estas instruções para o **Front-end** (iOS) e **Back-end**:
+### Pré-requisitos
 
-### Clonando o Projeto Front-end (iOS)
-1. Abra o terminal.
-2. Navegue até a pasta onde deseja salvar o repositório.
-3. Execute o seguinte comando para clonar o repositório iOS:
-   ```bash
-   git clone <URL-do-repositório-App-Crud-Login-IOS>
-   ```
-4. Após clonar, abra o projeto no Xcode:
-   - No terminal, navegue até a pasta do projeto:
-     ```bash
-     cd App-Crud-Login-IOS
-     ```
-   - Abra o projeto:
-     ```bash
-     open <nome-do-arquivo-do-projeto>.xcworkspace
-     ```
-5. Compile e execute o projeto no Xcode.
+- [Xcode](https://developer.apple.com/xcode/)
 
-### Clonando e Configurando o Projeto Back-end
-1. No terminal, vá para a pasta onde deseja salvar o back-end.
-2. Execute o seguinte comando para clonar o repositório de back-end:
+### Clonando o Projeto
+
+1. Abra o terminal e navegue até a pasta desejada.
+2. Clone o repositório:
    ```bash
-   git clone <[URL-do-repositório-App-Crud-Login-Back-End](https://github.com/J41R0JUNIOR/Clinic-Project_Back-End.git)>
+   git clone https://github.com/J41R0JUNIOR/Clinic-Project_Front-End_IOS.git
    ```
 3. Navegue até a pasta do projeto:
    ```bash
-   cd App-Crud-Login-Back-End
-   ```
-4. Instale as dependências:
-   ```bash
-   npm install
-   ```
-5. Implante o projeto usando o Serverless Framework:
-   - **Certifique-se de que o Serverless Framework esteja configurado e autenticado com sua conta da AWS.**
-   ```bash
-   serverless deploy
+   cd App-Crud-Login-IOS
    ```
 
-Agora você terá as APIs e o aplicativo iOS prontos para uso e testes!
+### Executando o Projeto
+
+1. Selecione um simulador ou dispositivo.
+2. Compile e execute (⌘R).
+
+## Funcionalidades
+
+- **Autenticação de Usuários**: Cadastro e login seguro.
+- **Gerenciamento de Pacientes**: Listagem, adição, atualização e remoção.
+- **Gerenciamento de Médicos**: Funcionalidades semelhantes ao gerenciamento de pacientes.
+- **Agendamento de Consultas**: Agendar, visualizar e cancelar consultas.
 
 ## Contribuições
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
 
 ---
-
-### Dicas Adicionais
-
-- **Documentação**: Considere adicionar documentação para cada repositório individualmente, especialmente para o back-end, onde pode haver detalhes sobre as APIs, parâmetros esperados, e exemplos de requisições/respostas.
-- **ReadMe Separados**: Cada repositório pode ter seu próprio arquivo README.md com informações específicas e instruções de configuração, caso necessário.
-- **Controle de Versão**: Utilize branches para diferentes funcionalidades ou correções para facilitar o gerenciamento do código.
