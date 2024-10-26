@@ -20,9 +20,9 @@ class Api: ObservableObject {
     
     static var shared = Api()
     
-    func getAllPatients<T: Decodable>() async  throws -> T? {
+    func getAllData<T: Decodable>(urlString: String) async  throws -> T? {
         
-        guard let url = URL(string: URLs.getAllPatients.rawValue) else {
+        guard let url = URL(string: urlString) else {
              throw APIError.invalidURL
         }
         
@@ -39,9 +39,9 @@ class Api: ObservableObject {
         
     }
     
-    func getPatientById<T: Decodable>(id: String) async throws -> T? {
+    func getDataById<T: Decodable>(urlString: String) async throws -> T? {
         
-        guard let url = URL(string: "\(URLs.getPatientById.rawValue)/\(id)") else {
+        guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
         }
         
@@ -57,13 +57,13 @@ class Api: ObservableObject {
         return try decode(content: data)
     }
 
-    func createPatient(patient: Patient) async throws {
+    func createData<T: Encodable>(dataToCreate: T, urlString: String) async throws {
         
-        guard let url = URL(string: URLs.createPatient.rawValue) else {
+        guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
         }
         
-        let patientData = try JSONEncoder().encode(patient)
+        let patientData = try JSONEncoder().encode(dataToCreate)
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -77,14 +77,14 @@ class Api: ObservableObject {
         }
     }
     
-    func updatePatient(id: String, patient: Patient) async throws {
-        guard let url = URL(string: "\(URLs.updatePatient.rawValue)\(id)") else {
+    func updateData<T: Codable>(dataToBeUpdated: T, urlString: String) async throws {
+        guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
         }
                 
         var request = URLRequest(url: url)
         request.httpMethod = "PATCH"
-        request.httpBody = encode(content: patient)
+        request.httpBody = encode(content: dataToBeUpdated)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let (_, response) = try await URLSession.shared.data(for: request)
@@ -94,8 +94,8 @@ class Api: ObservableObject {
         }
     }
     
-    func deletePatient(id: String) async throws {
-        guard let url = URL(string: "\(URLs.getPatientById.rawValue)\(id)") else {
+    func deleteData(urlString: String) async throws {
+        guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
         }
         var request = URLRequest(url: url)
@@ -107,7 +107,7 @@ class Api: ObservableObject {
             throw APIError.invalidResponse
         }
     }
-#warning("encode")
+    
     func encode<T:Codable>(content: T) -> Data? {
       
         do {
