@@ -16,9 +16,9 @@ enum APIError: Error{
 import Foundation
 
 @Observable
-class CallApi: ObservableObject {
+class Api: ObservableObject {
     
-    static var shared = CallApi()
+    static var shared = Api()
     
     func getAllPatients<T: Decodable>() async  throws -> T? {
         
@@ -40,9 +40,11 @@ class CallApi: ObservableObject {
     }
     
     func getPatientById<T: Decodable>(id: String) async throws -> T? {
+        
         guard let url = URL(string: "\(URLs.getPatientById.rawValue)/\(id)") else {
             throw APIError.invalidURL
         }
+        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
@@ -56,6 +58,7 @@ class CallApi: ObservableObject {
     }
 
     func createPatient(patient: Patient) async throws {
+        
         guard let url = URL(string: URLs.createPatient.rawValue) else {
             throw APIError.invalidURL
         }
@@ -78,12 +81,10 @@ class CallApi: ObservableObject {
         guard let url = URL(string: "\(URLs.updatePatient.rawValue)\(id)") else {
             throw APIError.invalidURL
         }
-        
-        let patientData = try JSONEncoder().encode(patient)
-        
+                
         var request = URLRequest(url: url)
         request.httpMethod = "PATCH"
-        request.httpBody = patientData
+        request.httpBody = encode(content: patient)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let (_, response) = try await URLSession.shared.data(for: request)
@@ -106,18 +107,17 @@ class CallApi: ObservableObject {
             throw APIError.invalidResponse
         }
     }
-    
-//    func encode<T:Codable>(content: T) -> Data? {
-//        let encoder = PropertyListEncoder()
-//        encoder.outputFormat = .xml
-//
-//        do {
-//            let data = try encoder.encode(content)
-//            return data
-//        } catch {
-//            return nil
-//        }
-//    }
+#warning("encode")
+    func encode<T:Codable>(content: T) -> Data? {
+      
+        do {
+            let data = try JSONEncoder().encode(content)
+            return data
+            
+        } catch {
+            return nil
+        }
+    }
 
     func decode<T: Decodable>(content: Data) throws -> T? {
         return try? JSONDecoder().decode(T.self, from: content)

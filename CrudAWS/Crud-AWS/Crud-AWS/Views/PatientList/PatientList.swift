@@ -1,13 +1,13 @@
 import SwiftUI
 
 struct PatientList: View {
-    @Bindable private var api = CallApi.shared
+    @Bindable private var api = Api.shared
     @Bindable var router = Router.shared
     @State private var isLoading = true
     @State private var errorMessage: String?
     
     @State var patientsLoaded: [Patient] = []
-
+    
     var body: some View {
         VStack {
             Text("Patients list")
@@ -28,8 +28,13 @@ struct PatientList: View {
                     Button{
                         router.push(.patientDetails(patient))
                     } label: {
-                        Text(patient.name ?? "Nome indisponível")
-                            .padding(.vertical, 4)
+                        HStack{
+                            VStack{
+                                Text(patient.name ?? "Nome indisponível")
+                                Text(patient.phoneNumber ?? "")
+                            }
+                            //                            Text("\(patient. ?? 0) anos")
+                        }
                     }
                 }
                 .refreshable(action: {
@@ -38,11 +43,16 @@ struct PatientList: View {
                 .listStyle(PlainListStyle())
             }
             
-            Button("Create Patient") {
+            Button {
                 router.push(.createPatient)
+            } label: {
+                Text("Create Patient")
+                    .frame(maxWidth: .infinity)
             }
+            .tint(.blue)
             .buttonStyle(.borderedProminent)
         }
+        
         .onAppear {
             Task {
                 await loadPatients()
@@ -55,7 +65,7 @@ struct PatientList: View {
         }
         .padding()
     }
-
+    
     private func loadPatients() async {
         do {
             if let patients: [Patient] = try await api.getAllPatients(){
