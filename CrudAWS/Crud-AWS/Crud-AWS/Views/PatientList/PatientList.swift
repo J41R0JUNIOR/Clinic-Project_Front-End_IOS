@@ -67,7 +67,7 @@ struct PatientList: View {
     
     private func loadPatients() async {
         do {
-            if let patients: [Patient] = try await api.getAllData(urlString: URLs.getAllPatients.rawValue){
+            if let patients: [Patient] = try await api.getAllData(urlString: URLs.getAllPatients.url){
                 self.patientsLoaded = patients
             }
             isLoading = false
