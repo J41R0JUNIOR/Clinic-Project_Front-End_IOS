@@ -20,9 +20,9 @@ class CallApi: ObservableObject {
     
     static var shared = CallApi()
     
-    var patients: [Patient] = []
     
-    func getAllPatients() async  throws -> [Patient] {
+    
+    func getAllPatients<T: Decodable>() async  throws -> T? {
         
         guard let url = URL(string: URLs.getAllPatients.rawValue) else {
              throw APIError.invalidURL
@@ -37,13 +37,12 @@ class CallApi: ObservableObject {
             throw APIError.invalidResponse
         }
         
-        do {
-            let patients = try JSONDecoder().decode([Patient].self, from: data)
-            self.patients = patients
-            return patients
-        } catch {
-            throw APIError.invalidData
-        }
+  
+//            let patients = try JSONDecoder().decode([Patient].self, from: data)
+//            self.patients = patients
+//            return patients
+        return try decode(content: data)
+        
     }
     
     func getPatientById(id: String) async throws -> Patient {
@@ -119,6 +118,22 @@ class CallApi: ObservableObject {
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
             print("Erro")
         }
+    }
+    
+//    func encode<T:Codable>(content: T) -> Data? {
+//        let encoder = PropertyListEncoder()
+//        encoder.outputFormat = .xml
+//
+//        do {
+//            let data = try encoder.encode(content)
+//            return data
+//        } catch {
+//            return nil
+//        }
+//    }
+
+    func decode<T: Decodable>(content: Data) throws -> T? {
+        return try? JSONDecoder().decode(T.self, from: content)
     }
 }
 

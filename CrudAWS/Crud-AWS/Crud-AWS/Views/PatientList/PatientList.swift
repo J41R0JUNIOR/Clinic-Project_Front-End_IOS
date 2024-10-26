@@ -5,6 +5,8 @@ struct PatientList: View {
     @Bindable var router = Router.shared
     @State private var isLoading = true
     @State private var errorMessage: String?
+    
+    @State var patientsLoaded: [Patient] = []
 
     var body: some View {
         VStack {
@@ -22,7 +24,7 @@ struct PatientList: View {
                     .foregroundColor(.red)
                 
             } else {
-                List(api.patients) { patient in
+                List(patientsLoaded) { patient in
                     Button{
                         router.push(.patientDetails(patient))
                     } label: {
@@ -56,7 +58,10 @@ struct PatientList: View {
 
     private func loadPatients() async {
         do {
-            let _ = try await api.getAllPatients()
+            if let patients: [Patient] = try await api.getAllPatients(){
+                self.patientsLoaded = patients
+                print(patients)
+            }
             isLoading = false
         } catch {
             errorMessage = error.localizedDescription
