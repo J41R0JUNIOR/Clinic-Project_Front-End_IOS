@@ -33,47 +33,47 @@ This project is a clinic application that manages patients, doctors, and appoint
 
 ## How to Run
 
-Para clonar e configurar o projeto Clinic, siga estas instruções para as partes do **Front-end** (iOS) e **Back-end**:
+To clone and set up the Clinic project, follow these instructions for the **Front-end** (iOS) and **Back-end**:
 
-### Clonando o Projeto Front-end (iOS)
-1. Abra o terminal.
-2. Navegue até a pasta onde deseja salvar o repositório.
-3. Execute o comando abaixo para clonar o repositório do iOS:
+### Cloning the Front-end Project (iOS)
+1. Open the terminal.
+2. Navigate to the folder where you want to save the repository.
+3. Run the following command to clone the iOS repository:
    ```bash
-   git clone <URL-do-repositorio-App-Crud-Login-IOS>
+   git clone <URL-of-App-Crud-Login-IOS-repository>
    ```
-4. Após clonar, abra o projeto no Xcode:
-   - No terminal, navegue até a pasta do projeto:
+4. After cloning, open the project in Xcode:
+   - In the terminal, navigate to the project folder:
      ```bash
      cd App-Crud-Login-IOS
      ```
-   - Abra o projeto:
+   - Open the project:
      ```bash
-     open <nome-do-arquivo-projeto>.xcworkspace
+     open <project-file-name>.xcworkspace
      ```
-5. Compile e execute o projeto no Xcode.
+5. Build and run the project in Xcode.
 
-### Clonando e Configurando o Projeto Back-end
-1. No terminal, vá para a pasta onde deseja salvar o back-end.
-2. Execute o comando para clonar o repositório do back-end:
+### Cloning and Setting Up the Back-end Project
+1. In the terminal, go to the folder where you want to save the back end.
+2. Run the following command to clone the back-end repository:
    ```bash
-   git clone <URL-do-repositorio-App-Crud-Login-Back-End>
+   git clone <URL-of-App-Crud-Login-Back-End-repository>
    ```
-3. Navegue até a pasta do projeto:
+3. Navigate to the project folder:
    ```bash
    cd App-Crud-Login-Back-End
    ```
-4. Instale as dependências:
+4. Install the dependencies:
    ```bash
    npm install
    ```
-5. Implante o projeto usando o Serverless Framework:
-   - **Certifique-se de ter o Serverless Framework configurado e autenticado com sua conta AWS.**
+5. Deploy the project using the Serverless Framework:
+   - **Ensure you have the Serverless Framework configured and authenticated with your AWS account.**
    ```bash
    serverless deploy
    ```
 
-Agora, você terá as APIs e a aplicação iOS prontas para uso e teste!
+Now you will have the APIs and the iOS app ready for use and testing!
 
 ## Contributions
 
