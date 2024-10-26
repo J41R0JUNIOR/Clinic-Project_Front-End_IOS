@@ -9,6 +9,7 @@ enum URLs: String {
     case getAllPatients = "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patients/allPatients"
     case deletePatient = "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patient/"
     case createPatient = "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patients"
+    case updatePatient = "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patients/"
 }
 
 enum APIError: Error{
@@ -67,7 +68,25 @@ class CallApi: ObservableObject {
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
             throw APIError.invalidResponse
         }
+    }
+    
+    func updatePatient(id: String, patient: Patient) async throws {
+        guard let url = URL(string: "\(URLs.updatePatient.rawValue)\(id)") else {
+            throw APIError.invalidURL
+        }
         
+        let patientData = try JSONEncoder().encode(patient)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "PATCH"
+        request.httpBody = patientData
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+            throw APIError.invalidResponse
+        }
     }
     
     func deletePatient(id: String) async throws {
@@ -77,15 +96,11 @@ class CallApi: ObservableObject {
         
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
+    
+        let (_, response) = try await URLSession.shared.data(for: request)
         
-        do {
-            let (_, response) = try await URLSession.shared.data(for: request)
-            
-            if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-                print("Erro")
-            }
-        } catch {
-            throw error
+        if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+            print("Erro")
         }
     }
 }

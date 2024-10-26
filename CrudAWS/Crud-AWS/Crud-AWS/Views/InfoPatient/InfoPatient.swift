@@ -1,10 +1,4 @@
-//
-//  InfoPatient.swift
-//  Crud-AWS
-//
-//  Created by Jairo Júnior on 25/10/24.
-//
-
+import Foundation
 import SwiftUI
 
 struct InfoPatient: View {
@@ -13,31 +7,34 @@ struct InfoPatient: View {
     @Bindable private var api = CallApi.shared
     
     var body: some View {
-        VStack{
+        VStack {
             Text(patientInfo.name ?? "No name")
             Spacer()
             
-            HStack {
-                Text("Age: \(patientInfo.age ?? 0)")
-                Text("Height: \(patientInfo.height ?? 0)")
-                Text("Weight: \(patientInfo.weight ?? 0)")
-            }
+            Text("Age: \(patientInfo.age ?? 0)")
+            Text("Height: \(patientInfo.height ?? 0)")
+            Text("Weight: \(patientInfo.weight ?? 0)")
             
             Text("Health Service Number: \(patientInfo.healthServiceNumber ?? "")")
             Text("Phone Number: \(patientInfo.phoneNumber ?? " ")")
             
             Spacer()
             
-            Button("Delete Patient") {
+            Button {
                 Task {
                     try await api.deletePatient(id: patientInfo.id!)
                 }
                 do {
                     router.pop()
                 }
-            }.buttonStyle(.borderedProminent)
-                .tint(.red)
+            } label: {
+                Text("Delete Patient")
+                    .frame(maxWidth: .infinity)
+            }
+            .tint(.red)
+            .buttonStyle(.borderedProminent)
         }
+        .padding()
     }
 }
 
