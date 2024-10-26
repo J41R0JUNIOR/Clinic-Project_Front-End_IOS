@@ -3,6 +3,8 @@ import Foundation
 enum Routes { 
     case content
     case patientList
+    case patientDetails(Patient)
+    case createPatient
     case none
 }
 

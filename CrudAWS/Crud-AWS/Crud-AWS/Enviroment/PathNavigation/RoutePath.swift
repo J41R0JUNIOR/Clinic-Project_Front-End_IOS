@@ -10,12 +10,16 @@ public struct RoutePath: Hashable {
     @ViewBuilder
     func findPath() -> some View {
         switch route {
-        case .content:
-            ContentView()
         case .none:
             EmptyView()
+        case .content:
+            ContentView()
         case .patientList:
             PatientList()
+        case .patientDetails(let patientInfo):
+            InfoPatient(patientInfo: patientInfo)
+        case .createPatient:
+            CreatePatient()
         }
     }
 }

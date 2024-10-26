@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PatientList: View {
     @Bindable private var api = CallApi.shared
-    @EnvironmentObject var router: Router
+    @Bindable var router = Router.shared
     @State private var isLoading = true
     @State private var errorMessage: String?
 
@@ -24,14 +24,22 @@ struct PatientList: View {
             } else {
                 List(api.patients) { patient in
                     Button{
-                        
+                        router.push(.patientDetails(patient))
                     } label: {
                         Text(patient.name ?? "Nome indisponível")
                             .padding(.vertical, 4)
                     }
                 }
+                .refreshable(action: {
+                    await loadPatients()
+                })
                 .listStyle(PlainListStyle())
             }
+            
+            Button("Create Patient") {
+                router.push(.createPatient)
+            }
+            .buttonStyle(.borderedProminent)
         }
         .onAppear {
             Task {
@@ -43,7 +51,7 @@ struct PatientList: View {
 
     private func loadPatients() async {
         do {
-            try await api.getAllPatients()
+            let _ = try await api.getAllPatients()
             isLoading = false
         } catch {
             errorMessage = error.localizedDescription
