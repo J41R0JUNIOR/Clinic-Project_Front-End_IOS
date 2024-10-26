@@ -66,9 +66,9 @@ struct InfoPatient: View {
                 
                 Task {
                     if let patientID = patientInfo.id {
-                        try await api.updateData(dataToBeUpdated: patientInfo, urlString: "\(URLs.updatePatient.rawValue)\(patientID)")
+                        try await api.updateData(dataToBeUpdated: patientInfo, urlString: URLs.updatePatient(id: patientID).url)
                         
-                        if let updatedPatient: Patient = try await api.getDataById(urlString: "\(URLs.getPatientById.rawValue)/\(patientID)") {
+                        if let updatedPatient: Patient = try await api.getDataById(urlString: URLs.getPatientById(id: patientID).url) {
                             DispatchQueue.main.async {
                                 self.patientInfo = updatedPatient
                             }
@@ -83,7 +83,7 @@ struct InfoPatient: View {
             
             Button {
                 Task {
-                    try await api.deleteData(urlString: "\(URLs.getPatientById.rawValue)\(patientInfo.id!)")
+                    try await api.deleteData(urlString: URLs.getPatientById(id: patientInfo.id!).url)
                 }
                 router.pop()
             } label: {

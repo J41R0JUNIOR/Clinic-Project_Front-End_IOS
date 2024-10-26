@@ -67,7 +67,7 @@ struct CreatePatient: View {
                             name: name, /*birthDate: birthDate,*/ healthServiceNumber: healthServiceNumber,
                             phoneNumber: phoneNumber, height: height, weight: weight
                         )
-                        try await api.createData(dataToCreate: newPatient, urlString: URLs.createPatient.rawValue)
+                        try await api.createData(dataToCreate: newPatient, urlString: URLs.createPatient.url)
                         router.pop()
                     }
                 }
