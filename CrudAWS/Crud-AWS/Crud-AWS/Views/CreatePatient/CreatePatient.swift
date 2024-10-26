@@ -5,7 +5,7 @@ struct CreatePatient: View {
     @Bindable var router = Router.shared
 
     @State private var name: String = ""
-    @State private var age: Int = 0
+    @State private var birthDate: Date = Date() // Definimos a data de nascimento como uma data padrão
     @State private var healthServiceNumber: String = ""
     @State private var phoneNumber: String = ""
     @State private var height: Int = 0
@@ -18,13 +18,12 @@ struct CreatePatient: View {
                 TextField("Enter name", text: $name)
                     .textFieldStyle(.roundedBorder)
             }
-            
-            HStack {
-                Text("Age")
-                TextField("Enter age", value: $age, format: .number)
-                    .keyboardType(.numberPad)
-                    .textFieldStyle(.roundedBorder)
-            }
+//            
+//            HStack {
+//                Text("Birth Date")
+//                DatePicker("Select date", selection: $birthDate, displayedComponents: .date)
+//                    .labelsHidden() // Oculta o rótulo repetido
+//            }
             
             HStack {
                 Text("Health Service Number")
@@ -52,7 +51,8 @@ struct CreatePatient: View {
                     .keyboardType(.numberPad)
                     .textFieldStyle(.roundedBorder)
             }
-            HStack{
+            
+            HStack {
                 Spacer()
                 
                 Button("Cancel") {
@@ -64,18 +64,13 @@ struct CreatePatient: View {
                     Task {
                         let newPatient = Patient(
                             id: nil,
-                            name: name,
-                            age: age,
-                            healthServiceNumber: healthServiceNumber,
-                            phoneNumber: phoneNumber,
-                            height: height,
-                            weight: weight
+                            name: name, /*birthDate: birthDate,*/ healthServiceNumber: healthServiceNumber,
+                            phoneNumber: phoneNumber, height: height, weight: weight
                         )
                         try await api.createPatient(patient: newPatient)
                         router.pop()
                     }
                 }
-              
             }
             .buttonStyle(.borderedProminent)
             .padding(.top, 20)

@@ -120,16 +120,9 @@ class Api: ObservableObject {
     }
 
     func decode<T: Decodable>(content: Data) throws -> T? {
-        return try? JSONDecoder().decode(T.self, from: content)
+        let decoder = JSONDecoder()
+        return try? decoder.decode(T.self, from: content)
     }
 }
 
-struct Patient: Codable, Identifiable {
-    var id: String?
-    var name: String?
-    var age: Int?
-    var healthServiceNumber: String?
-    var phoneNumber: String?
-    var height: Int?
-    var weight: Int?
-}
+

@@ -6,7 +6,6 @@ struct InfoPatient: View {
     @Bindable private var api = Api.shared
     
     var body: some View {
-        
         Form {
             Section(header: Text("Patient Details").font(.headline)) {
                 HStack {
@@ -32,14 +31,12 @@ struct InfoPatient: View {
             }
             
             Section(header: Text("Physical Metrics").font(.headline)) {
-                HStack {
-                    Text("Age")
-                    Spacer()
-                    TextField("Age", value: $patientInfo.age, format: .number)
-                        .keyboardType(.numberPad)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(maxWidth: 100)
-                }
+//                HStack {
+//                    Text("Age")
+//                    Spacer()
+//                    Text("\(calculateAge(from: patientInfo.birthDate ?? .now)) years")
+//                        .foregroundColor(.secondary)
+//                }
                 
                 HStack {
                     Text("Height (cm)")
@@ -59,14 +56,12 @@ struct InfoPatient: View {
                         .frame(maxWidth: 100)
                 }
             }
-            
         }
         .navigationTitle("Patient Info")
         .padding()
-    
-        VStack{
+        
+        VStack {
             Button {
-                
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 
                 Task {
@@ -85,23 +80,30 @@ struct InfoPatient: View {
                     .frame(maxWidth: .infinity)
             }
             .tint(.blue)
-          
             
             Button {
                 Task {
                     try await api.deletePatient(id: patientInfo.id!)
-                    router.pop()
                 }
+                router.pop()
             } label: {
                 Text("Delete Patient")
                     .frame(maxWidth: .infinity)
             }
             .tint(.red)
-         
-        }  .buttonStyle(.borderedProminent).padding()
+        }
+        .buttonStyle(.borderedProminent)
+        .padding()
+    }
+    
+    // Função para calcular a idade com base na data de nascimento
+    private func calculateAge(from birthDate: Date) -> Int {
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: Date())
+        return ageComponents.year ?? 0
     }
 }
 
 #Preview {
-    InfoPatient(patientInfo: .init(id: UUID().uuidString, name: "Jairo", age: 21, healthServiceNumber: "231jl32", phoneNumber: "61999022023", height: 177, weight: 70))
+    InfoPatient(patientInfo: .init(id: UUID().uuidString, name: "Jairo", healthServiceNumber: "231jl32", phoneNumber: "61999022023", height: 177, weight: 70))
 }

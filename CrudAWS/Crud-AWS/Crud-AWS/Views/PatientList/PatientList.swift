@@ -31,9 +31,8 @@ struct PatientList: View {
                         HStack{
                             VStack{
                                 Text(patient.name ?? "Nome indisponível")
-                                Text(patient.phoneNumber ?? "")
+                                Text(patient.phoneNumber ?? "").font(.caption)
                             }
-                            //                            Text("\(patient. ?? 0) anos")
                         }
                     }
                 }
