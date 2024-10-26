@@ -1,7 +1,3 @@
-Isso parece ótimo! Organizar seu projeto em dois repositórios separados para o front-end e back-end é uma prática recomendada, pois isso facilita a manutenção, a colaboração e o gerenciamento do código. Aqui está uma versão revisada da descrição do seu projeto, levando em consideração a separação em repositórios:
-
----
-
 # Clinic Project
 
 Este projeto é um aplicativo de clínica que gerencia pacientes, médicos e consultas. Ele consiste em duas partes principais:
@@ -90,5 +86,3 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar
 - **Documentação**: Considere adicionar documentação para cada repositório individualmente, especialmente para o back-end, onde pode haver detalhes sobre as APIs, parâmetros esperados, e exemplos de requisições/respostas.
 - **ReadMe Separados**: Cada repositório pode ter seu próprio arquivo README.md com informações específicas e instruções de configuração, caso necessário.
 - **Controle de Versão**: Utilize branches para diferentes funcionalidades ou correções para facilitar o gerenciamento do código.
-  
-Se precisar de mais ajuda ou de detalhes adicionais para a documentação, fique à vontade para perguntar!
