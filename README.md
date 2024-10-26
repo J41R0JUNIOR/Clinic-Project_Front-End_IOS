@@ -1,80 +1,94 @@
+Isso parece ótimo! Organizar seu projeto em dois repositórios separados para o front-end e back-end é uma prática recomendada, pois isso facilita a manutenção, a colaboração e o gerenciamento do código. Aqui está uma versão revisada da descrição do seu projeto, levando em consideração a separação em repositórios:
+
+---
+
 # Clinic Project
 
-This project is a clinic application that manages patients, doctors, and appointments. It consists of two main branches:
+Este projeto é um aplicativo de clínica que gerencia pacientes, médicos e consultas. Ele consiste em duas partes principais:
 
-## Project Structure
+## Estrutura do Projeto
 
 1. **App-Crud-Login-IOS**: 
-   - Front-end implementation for iOS.
-   - Features for managing patients, doctors, appointments, and user authentication.
+   - Implementação do front-end para iOS.
+   - Funcionalidades para gerenciar pacientes, médicos, consultas e autenticação de usuários.
 
 2. **App-Crud-Login-Back-End**: 
-   - Back-end implementation in JavaScript.
-   - RESTful APIs for CRUD operations using AWS services.
+   - Implementação do back-end em JavaScript.
+   - APIs RESTful para operações CRUD utilizando serviços da AWS.
 
-## Features
+## Funcionalidades
 
 ### Front-end (iOS)
-- Patient, doctor, and appointment management.
-- User authentication for secure access.
+- Gerenciamento de pacientes, médicos e consultas.
+- Autenticação de usuários para acesso seguro.
 
 ### Back-end
-- RESTful API endpoints for:
-  - Creating, reading, updating, and deleting patient information.
-- Utilizes:
-  - **AWS Lambda** for serverless functions.
-  - **DynamoDB** for data storage.
-  - **API Gateway** for exposing APIs.
+- Endpoints da API RESTful para:
+  - Criar, ler, atualizar e excluir informações de pacientes.
+- Utiliza:
+  - **AWS Lambda** para funções serverless.
+  - **DynamoDB** para armazenamento de dados.
+  - **API Gateway** para expor as APIs.
 
-## Technologies
+## Tecnologias
 
 - **Front-end**: Swift, SwiftUI
 - **Back-end**: JavaScript, Node.js, AWS SDK, DynamoDB, Lambda, API Gateway
 
-## How to Run
+## Como Executar
 
-To clone and set up the Clinic project, follow these instructions for the **Front-end** (iOS) and **Back-end**:
+Para clonar e configurar o projeto da clínica, siga estas instruções para o **Front-end** (iOS) e **Back-end**:
 
-### Cloning the Front-end Project (iOS)
-1. Open the terminal.
-2. Navigate to the folder where you want to save the repository.
-3. Run the following command to clone the iOS repository:
+### Clonando o Projeto Front-end (iOS)
+1. Abra o terminal.
+2. Navegue até a pasta onde deseja salvar o repositório.
+3. Execute o seguinte comando para clonar o repositório iOS:
    ```bash
-   git clone <URL-of-App-Crud-Login-IOS-repository>
+   git clone <URL-do-repositório-App-Crud-Login-IOS>
    ```
-4. After cloning, open the project in Xcode:
-   - In the terminal, navigate to the project folder:
+4. Após clonar, abra o projeto no Xcode:
+   - No terminal, navegue até a pasta do projeto:
      ```bash
      cd App-Crud-Login-IOS
      ```
-   - Open the project:
+   - Abra o projeto:
      ```bash
-     open <project-file-name>.xcworkspace
+     open <nome-do-arquivo-do-projeto>.xcworkspace
      ```
-5. Build and run the project in Xcode.
+5. Compile e execute o projeto no Xcode.
 
-### Cloning and Setting Up the Back-end Project
-1. In the terminal, go to the folder where you want to save the back end.
-2. Run the following command to clone the back-end repository:
+### Clonando e Configurando o Projeto Back-end
+1. No terminal, vá para a pasta onde deseja salvar o back-end.
+2. Execute o seguinte comando para clonar o repositório de back-end:
    ```bash
-   git clone <URL-of-App-Crud-Login-Back-End-repository>
+   git clone <[URL-do-repositório-App-Crud-Login-Back-End](https://github.com/J41R0JUNIOR/Clinic-Project_Back-End.git)>
    ```
-3. Navigate to the project folder:
+3. Navegue até a pasta do projeto:
    ```bash
    cd App-Crud-Login-Back-End
    ```
-4. Install the dependencies:
+4. Instale as dependências:
    ```bash
    npm install
    ```
-5. Deploy the project using the Serverless Framework:
-   - **Ensure you have the Serverless Framework configured and authenticated with your AWS account.**
+5. Implante o projeto usando o Serverless Framework:
+   - **Certifique-se de que o Serverless Framework esteja configurado e autenticado com sua conta da AWS.**
    ```bash
    serverless deploy
    ```
 
-Now you will have the APIs and the iOS app ready for use and testing!
+Agora você terá as APIs e o aplicativo iOS prontos para uso e testes!
 
-## Contributions
+## Contribuições
 
-Contributions are welcome! Feel free to open issues or submit pull requests.
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
+
+---
+
+### Dicas Adicionais
+
+- **Documentação**: Considere adicionar documentação para cada repositório individualmente, especialmente para o back-end, onde pode haver detalhes sobre as APIs, parâmetros esperados, e exemplos de requisições/respostas.
+- **ReadMe Separados**: Cada repositório pode ter seu próprio arquivo README.md com informações específicas e instruções de configuração, caso necessário.
+- **Controle de Versão**: Utilize branches para diferentes funcionalidades ou correções para facilitar o gerenciamento do código.
+  
+Se precisar de mais ajuda ou de detalhes adicionais para a documentação, fique à vontade para perguntar!
