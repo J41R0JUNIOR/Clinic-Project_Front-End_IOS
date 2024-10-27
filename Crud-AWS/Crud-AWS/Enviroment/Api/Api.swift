@@ -57,17 +57,17 @@ class Api: ObservableObject {
         return try decode(content: data)
     }
 
-    func createData<T: Encodable>(dataToCreate: T, urlString: String) async throws {
+    func createData<T: Codable>(dataToCreate: T, urlString: String) async throws {
         
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
         }
         
-        let patientData = try JSONEncoder().encode(dataToCreate)
+        let dataBody = encode(content: dataToCreate)
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = patientData
+        request.httpBody = dataBody
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let (_, response) = try await URLSession.shared.data(for: request)
