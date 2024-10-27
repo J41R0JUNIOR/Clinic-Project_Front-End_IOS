@@ -64,10 +64,11 @@ struct CreatePatient: View {
                     Task {
                         let newPatient = Patient(
                             id: nil,
-                            name: name, /*birthDate: birthDate,*/ healthServiceNumber: healthServiceNumber,
+                            name: name, healthServiceNumber: healthServiceNumber,
                             phoneNumber: phoneNumber, height: height, weight: weight
                         )
                         try await api.createData(dataToCreate: newPatient, urlString: URLs.createPatient.url)
+                        
                         router.pop()
                     }
                 }
