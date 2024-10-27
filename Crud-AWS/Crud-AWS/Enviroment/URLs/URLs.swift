@@ -17,15 +17,15 @@ enum URLs {
     var url: String {
         switch self {
         case .getAllPatients:
-            return "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patients/allPatients"
+            return "https://tt9ii4x9ul.execute-api.us-east-1.amazonaws.com/dev/patients/allPatients"
         case .createPatient:
-            return "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patients"
+            return "https://tt9ii4x9ul.execute-api.us-east-1.amazonaws.com/dev/patients"
         case .getPatientById(let id):
-            return "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patient//\(id)"
+            return "https://tt9ii4x9ul.execute-api.us-east-1.amazonaws.com/dev/patient//\(id)"
         case .updatePatient(let id):
-            return "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patients/\(id)"
+            return "https://tt9ii4x9ul.execute-api.us-east-1.amazonaws.com/dev/patients/\(id)"
         case .deletePatient(let id):
-            return "https://6faeslzxx1.execute-api.us-east-1.amazonaws.com/dev/patient/\(id)"
+            return "https://tt9ii4x9ul.execute-api.us-east-1.amazonaws.com/dev/patient/\(id)"
         }
     }
 }
