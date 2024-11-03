@@ -14,7 +14,10 @@ struct ContentView: View {
             Button("Show Patients"){
                 router.push(.patientList)
             }
-        }
+            Button("Show Doctors"){
+                
+            }
+        }.buttonStyle(.borderedProminent)
     }
 }
 
