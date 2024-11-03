@@ -31,12 +31,19 @@ struct InfoPatient: View {
             }
             
             Section(header: Text("Physical Metrics").font(.headline)) {
-//                HStack {
-//                    Text("Age")
-//                    Spacer()
-//                    Text("\(calculateAge(from: patientInfo.birthDate ?? .now)) years")
-//                        .foregroundColor(.secondary)
-//                }
+                HStack {
+                    Text("Age")
+                    Spacer()
+                    Text("\(calculateAge(from: patientInfo.birthDateAsDate)) years")
+                        .foregroundColor(.secondary)
+                }
+                
+                HStack {
+                    Text("Birth Date")
+                    Spacer()
+                    DatePicker("Select date", selection: $patientInfo.birthDateAsDate, displayedComponents: .date)
+                        .labelsHidden()
+                }
                 
                 HStack {
                     Text("Height (cm)")
@@ -103,6 +110,7 @@ struct InfoPatient: View {
         return ageComponents.year ?? 0
     }
 }
+
 
 #Preview {
     InfoPatient(patientInfo: .init(id: UUID().uuidString, name: "Jairo", healthServiceNumber: "231jl32", phoneNumber: "61999022023", height: 177, weight: 70))

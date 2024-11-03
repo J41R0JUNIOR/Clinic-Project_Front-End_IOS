@@ -3,14 +3,14 @@ import SwiftUI
 struct CreatePatient: View {
     @Bindable private var api = Api.shared
     @Bindable var router = Router.shared
-
+    
     @State private var name: String = ""
-    @State private var birthDate: Date = Date() // Definimos a data de nascimento como uma data padrão
+    @State private var birthDate: Date = Date()
     @State private var healthServiceNumber: String = ""
     @State private var phoneNumber: String = ""
     @State private var height: Int = 0
     @State private var weight: Int = 0
-
+    
     var body: some View {
         VStack(spacing: 16) {
             HStack {
@@ -18,12 +18,12 @@ struct CreatePatient: View {
                 TextField("Enter name", text: $name)
                     .textFieldStyle(.roundedBorder)
             }
-//            
-//            HStack {
-//                Text("Birth Date")
-//                DatePicker("Select date", selection: $birthDate, displayedComponents: .date)
-//                    .labelsHidden() // Oculta o rótulo repetido
-//            }
+            
+            HStack {
+                Text("Birth Date")
+                DatePicker("Select date", selection: $birthDate, displayedComponents: .date)
+                    .labelsHidden() 
+            }
             
             HStack {
                 Text("Health Service Number")
@@ -62,13 +62,14 @@ struct CreatePatient: View {
                 
                 Button("Create") {
                     Task {
+                
                         let newPatient = Patient(
                             id: nil,
-                            name: name, healthServiceNumber: healthServiceNumber,
+                            name: name, birthDate: birthDate.ISO8601Format(), healthServiceNumber: healthServiceNumber,
                             phoneNumber: phoneNumber, height: height, weight: weight
                         )
-                        try await api.createData(dataToCreate: newPatient, urlString: URLs.createPatient.url)
                         
+                        try await api.createData(dataToCreate: newPatient, urlString: URLs.createPatient.url)
                         router.pop()
                     }
                 }
