@@ -12,6 +12,7 @@ struct PatientList: View {
         VStack {
             Text("Patients list")
                 .font(.headline)
+                     
             Spacer()
             
             if isLoading {
@@ -51,6 +52,17 @@ struct PatientList: View {
             .tint(.blue)
             .buttonStyle(.borderedProminent)
         }
+        .toolbar(content: {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button{
+                    
+                }label: {
+                    Image(systemName: "plus")
+                }
+            }
+        })
+        
+        
         
         .onAppear {
             Task {
@@ -79,5 +91,7 @@ struct PatientList: View {
 }
 
 #Preview {
-    PatientList().environmentObject(Router.shared)
+    NavigationStack{
+        PatientList().environmentObject(Router.shared)
+    }
 }
