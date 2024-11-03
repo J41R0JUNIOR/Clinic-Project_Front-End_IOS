@@ -7,16 +7,17 @@
 
 import Foundation
 
+
 struct Patient: Codable, Identifiable {
     var id: String?
-    var name: String?
-    var birthDate: String? // Armazenado como String
-    var healthServiceNumber: String?
-    var phoneNumber: String?
-    var height: Int?
-    var weight: Int?
+    var name: String? = ""
+    var birthDate: String? = ""
+    var healthServiceNumber: String? = ""
+    var phoneNumber: String? = ""
+    var height: Int? = 0
+    var weight: Int? = 0
+    var adress: Adress?
     
-    // Computed property para converter `birthDate` em `Date`
     var birthDateAsDate: Date {
         get {
             guard let birthDate = birthDate else { return Date() }
@@ -30,3 +31,10 @@ struct Patient: Codable, Identifiable {
     }
 }
 
+struct Adress: Codable{
+    var street: String? = ""
+    var city: String? = ""
+    var state: String? = ""
+    var country: String? = ""
+    var postalCode: String? = ""
+}

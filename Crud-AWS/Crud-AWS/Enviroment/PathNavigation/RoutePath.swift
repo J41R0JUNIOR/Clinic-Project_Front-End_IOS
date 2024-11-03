@@ -17,7 +17,7 @@ public struct RoutePath: Hashable {
         case .patientList:
             PatientList()
         case .patientDetails(let patientInfo):
-            InfoPatient(patientInfo: patientInfo)
+            InfoPatient(patient: patientInfo)
         case .createPatient:
             CreatePatient()
         }
