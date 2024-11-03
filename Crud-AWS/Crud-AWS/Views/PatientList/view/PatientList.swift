@@ -1,33 +1,30 @@
 import SwiftUI
 
 struct PatientList: View {
-    @Bindable private var api = Api.shared
-    @Bindable var router = Router.shared
-    @State private var isLoading = true
-    @State private var errorMessage: String?
     
-    @State var patientsLoaded: [Patient] = []
+    
+    @Bindable var viewModel = PatientListVM()
     
     var body: some View {
         VStack {
             Text("Patients list")
                 .font(.headline)
-                     
+            
             Spacer()
             
-            if isLoading {
+            if viewModel.model.isLoading {
                 ProgressView("Loading...")
                 
                 Spacer()
                 
-            } else if let errorMessage = errorMessage {
+            } else if let errorMessage = viewModel.model.errorMessage {
                 Text("Erro: \(errorMessage)")
                     .foregroundColor(.red)
                 
             } else {
-                List(patientsLoaded) { patient in
+                List(viewModel.model.patientsLoaded) { patient in
                     Button{
-                        router.push(.patientDetails(patient))
+                        viewModel.model.router.push(.patientDetails(patient))
                     } label: {
                         HStack{
                             VStack{
@@ -38,13 +35,13 @@ struct PatientList: View {
                     }
                 }
                 .refreshable(action: {
-                    await loadPatients()
+                    await viewModel.loadPatients()
                 })
                 .listStyle(PlainListStyle())
             }
             
             Button {
-                router.push(.createPatient)
+                viewModel.model.router.push(.createPatient)
             } label: {
                 Text("Create Patient")
                     .frame(maxWidth: .infinity)
@@ -62,31 +59,11 @@ struct PatientList: View {
             }
         })
         
-        
-        
-        .onAppear {
-            Task {
-                await loadPatients()
-            }
+        .task {
+            await viewModel.loadPatients()
         }
-        .onDisappear {
-            Task {
-                await loadPatients()
-            }
-        }
+        
         .padding()
-    }
-    
-    private func loadPatients() async {
-        do {
-            if let patients: [Patient] = try await api.getAllData(urlString: URLs.getAllPatients.url){
-                self.patientsLoaded = patients
-            }
-            isLoading = false
-        } catch {
-            errorMessage = error.localizedDescription
-            isLoading = false
-        }
     }
 }
 

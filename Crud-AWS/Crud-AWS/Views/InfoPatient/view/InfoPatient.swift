@@ -1,9 +1,12 @@
 import SwiftUI
 
 struct InfoPatient: View {
-    @State var patientInfo: Patient
-    @Bindable var router = Router.shared
-    @Bindable private var api = Api.shared
+    @State var viewModel: InfoPatientVM
+    
+    init(patient: Patient){
+        self.viewModel = .init(patient: patient)
+    }
+
     
     var body: some View {
         Form {
@@ -11,44 +14,45 @@ struct InfoPatient: View {
                 HStack {
                     Text("Name")
                     Spacer()
-                    Text(patientInfo.name ?? "No name")
+                    Text(viewModel.model.patient.name ?? "No name")
                         .foregroundColor(.secondary)
                 }
                 
                 HStack {
                     Text("Health Service Number")
                     Spacer()
-                    Text(patientInfo.healthServiceNumber ?? "Not provided")
+                    Text(viewModel.model.patient.healthServiceNumber ?? "Not provided")
                         .foregroundColor(.secondary)
                 }
                 
                 HStack {
                     Text("Phone Number")
                     Spacer()
-                    Text(patientInfo.phoneNumber ?? "Not provided")
+                    Text(viewModel.model.patient.phoneNumber ?? "Not provided")
                         .foregroundColor(.secondary)
                 }
-            }
-            
-            Section(header: Text("Physical Metrics").font(.headline)) {
+                
                 HStack {
                     Text("Age")
                     Spacer()
-                    Text("\(calculateAge(from: patientInfo.birthDateAsDate)) years")
+                    Text("\(calculateAge(from: viewModel.model.patient.birthDateAsDate)) years")
                         .foregroundColor(.secondary)
                 }
                 
                 HStack {
                     Text("Birth Date")
                     Spacer()
-                    DatePicker("Select date", selection: $patientInfo.birthDateAsDate, displayedComponents: .date)
+                    DatePicker("Select date", selection: $viewModel.model.patient.birthDateAsDate, displayedComponents: .date)
                         .labelsHidden()
                 }
+            }
+            
+            Section(header: Text("Physical Metrics").font(.headline)) {
                 
                 HStack {
                     Text("Height (cm)")
                     Spacer()
-                    TextField("Height", value: $patientInfo.height, format: .number)
+                    TextField("Height", value: $viewModel.model.patient.height, format: .number)
                         .keyboardType(.numberPad)
                         .textFieldStyle(.roundedBorder)
                         .frame(maxWidth: 100)
@@ -57,7 +61,7 @@ struct InfoPatient: View {
                 HStack {
                     Text("Weight (kg)")
                     Spacer()
-                    TextField("Weight", value: $patientInfo.weight, format: .number)
+                    TextField("Weight", value: $viewModel.model.patient.weight, format: .number)
                         .keyboardType(.numberPad)
                         .textFieldStyle(.roundedBorder)
                         .frame(maxWidth: 100)
@@ -71,17 +75,8 @@ struct InfoPatient: View {
             Button {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 
-                Task {
-                    if let patientID = patientInfo.id {
-                        try await api.updateData(dataToBeUpdated: patientInfo, urlString: URLs.updatePatient(id: patientID).url)
-                        
-                        if let updatedPatient: Patient = try await api.getDataById(urlString: URLs.getPatientById(id: patientID).url) {
-                            DispatchQueue.main.async {
-                                self.patientInfo = updatedPatient
-                            }
-                        }
-                    }
-                }
+                viewModel.updatePatient()
+                
             } label: {
                 Text("Update Patient")
                     .frame(maxWidth: .infinity)
@@ -90,9 +85,9 @@ struct InfoPatient: View {
             
             Button {
                 Task {
-                    try await api.deleteData(urlString: URLs.deletePatient(id: patientInfo.id!).url)
+                    try await viewModel.model.api.deleteData(urlString: URLs.deletePatient(id: viewModel.model.patient.id!).url)
                 }
-                router.pop()
+                viewModel.model.router.pop()
             } label: {
                 Text("Delete Patient")
                     .frame(maxWidth: .infinity)
@@ -103,7 +98,6 @@ struct InfoPatient: View {
         .padding()
     }
     
-    // Função para calcular a idade com base na data de nascimento
     private func calculateAge(from birthDate: Date) -> Int {
         let calendar = Calendar.current
         let ageComponents = calendar.dateComponents([.year], from: birthDate, to: Date())
@@ -113,5 +107,5 @@ struct InfoPatient: View {
 
 
 #Preview {
-    InfoPatient(patientInfo: .init(id: UUID().uuidString, name: "Jairo", healthServiceNumber: "231jl32", phoneNumber: "61999022023", height: 177, weight: 70))
+    InfoPatient(patient: .init())
 }
