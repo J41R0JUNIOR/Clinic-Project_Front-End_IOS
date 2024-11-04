@@ -8,14 +8,18 @@
 import Foundation
 
 
-struct Patient: Codable, Identifiable {
+struct Patient: Codable, Identifiable, Hashable {
+    static func == (lhs: Patient, rhs: Patient) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+    
     var id: String?
-    var name: String? = ""
-    var birthDate: String? = ""
-    var healthServiceNumber: String? = ""
-    var phoneNumber: String? = ""
-    var height: Int? = 0
-    var weight: Int? = 0
+    var name: String?
+    var birthDate: String?
+    var healthServiceNumber: String?
+    var phoneNumber: String?
+    var height: Int?
+    var weight: Int?
     var adress: Adress?
     
     var birthDateAsDate: Date {
@@ -31,10 +35,10 @@ struct Patient: Codable, Identifiable {
     }
 }
 
-struct Adress: Codable{
-    var street: String? = ""
-    var city: String? = ""
-    var state: String? = ""
-    var country: String? = ""
-    var postalCode: String? = ""
+struct Adress: Codable, Hashable{
+    var street: String?
+    var city: String?
+    var state: String?
+    var country: String?
+    var postalCode: String? 
 }
