@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct PatientList: View {
-    
-    
     @Bindable var viewModel = PatientListVM()
     
     var body: some View {
@@ -26,11 +24,12 @@ struct PatientList: View {
                     Button{
                         viewModel.model.router.push(.patientDetails(patient))
                     } label: {
-                        HStack{
-                            VStack{
-                                Text(patient.name ?? "Nome indisponível")
-                                Text(patient.phoneNumber ?? "").font(.caption)
-                            }
+                        VStack{
+                            Text(patient.name ?? "Nome indisponível")
+                            Text(viewModel.formatPhoneNumber(patient.phoneNumber ?? ""))
+                                .font(.subheadline)
+
+                                
                         }
                     }
                 }
@@ -49,15 +48,15 @@ struct PatientList: View {
             .tint(.blue)
             .buttonStyle(.borderedProminent)
         }
-        .toolbar(content: {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button{
-                    
-                }label: {
-                    Image(systemName: "plus")
-                }
-            }
-        })
+//        .toolbar(content: {
+//            ToolbarItem(placement: .topBarTrailing) {
+//                Button{
+//                    
+//                }label: {
+//                    Image(systemName: "plus")
+//                }
+//            }
+//        })
         
         .task {
             await viewModel.loadPatients()
