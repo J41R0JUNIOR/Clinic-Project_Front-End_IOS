@@ -13,7 +13,6 @@ class CreatePatientVM {
     
     func createPatient(method: CodeUrl){
         Task {
-            
             try await model.api.createData(dataToCreate: model.patient, urlString: URLs.createPatient(method: method).url)
             model.router.pop()
         }

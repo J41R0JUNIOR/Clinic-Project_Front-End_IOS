@@ -35,7 +35,7 @@ struct InfoPatient: View {
                 HStack {
                     Text("Age")
                     Spacer()
-                    Text("\(calculateAge(from: viewModel.model.patient.birthDateAsDate)) years")
+                    Text("\(viewModel.calculateAge(from: viewModel.model.patient.birthDateAsDate)) years")
                         .foregroundColor(.secondary)
                 }
                 
@@ -85,9 +85,11 @@ struct InfoPatient: View {
             
             Button {
                 Task {
-                    try await viewModel.model.api.deleteData(urlString: URLs.deletePatient(id: viewModel.model.patient.id!, method: .production).url)
+                    do {
+                        try await viewModel.model.api.deleteData(urlString: URLs.deletePatient(id: viewModel.model.patient.id!, method: .production).url)
+                        viewModel.model.router.pop() // Será executado somente após a exclusão ser concluída
+                    }
                 }
-                viewModel.model.router.pop()
             } label: {
                 Text("Delete Patient")
                     .frame(maxWidth: .infinity)
@@ -96,12 +98,6 @@ struct InfoPatient: View {
         }
         .buttonStyle(.borderedProminent)
         .padding()
-    }
-    
-    private func calculateAge(from birthDate: Date) -> Int {
-        let calendar = Calendar.current
-        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: Date())
-        return ageComponents.year ?? 0
     }
 }
 
