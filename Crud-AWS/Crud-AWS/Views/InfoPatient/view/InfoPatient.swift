@@ -84,10 +84,7 @@ struct InfoPatient: View {
             .tint(.blue)
             
             Button {
-                Task {
-                    try await viewModel.model.api.deleteData(urlString: URLs.deletePatient(id: viewModel.model.patient.id!, method: .production).url)
-                    viewModel.model.router.pop()
-                }
+                viewModel.deletePatient()
             } label: {
                 Text("Delete Patient")
                     .frame(maxWidth: .infinity)
