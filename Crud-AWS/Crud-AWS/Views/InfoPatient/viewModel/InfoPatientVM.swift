@@ -15,17 +15,30 @@ class InfoPatientVM {
         self.model = .init(patient: patient)
     }
     
-    func updatePatient() {
+    func updatePatient(method: CodeUrl) {
         Task {
             if let patientID = model.patient.id {
-                try await model.api.updateData(dataToBeUpdated: model.patient, urlString: URLs.updatePatient(id: patientID).url)
+                try await model.api.updateData(dataToBeUpdated: model.patient, urlString: URLs.updatePatient(id: patientID, method: method).url)
                 
-                if let updatedPatient: Patient = try await model.api.getDataById(urlString: URLs.getPatientById(id: patientID).url) {
+                if let updatedPatient: Patient = try await model.api.getDataById(urlString: URLs.getPatientById(id: patientID, method: method).url) {
                     DispatchQueue.main.async {
                         self.model.patient = updatedPatient
                     }
                 }
             }
         }
+    }
+    
+    func deletePatient() {
+        Task {
+            try await model.api.deleteData(urlString: URLs.deletePatient(id: model.patient.id!, method: .production).url)
+            model.router.pop()
+        }
+    }
+    
+    func calculateAge(from birthDate: Date) -> Int {
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: Date())
+        return ageComponents.year ?? 0
     }
 }

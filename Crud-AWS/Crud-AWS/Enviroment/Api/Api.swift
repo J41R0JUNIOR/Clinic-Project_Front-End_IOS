@@ -6,13 +6,6 @@
 //
 
 
-
-enum APIError: Error{
-    case invalidURL
-    case invalidResponse
-    case invalidData
-}
-
 import Foundation
 
 @Observable
@@ -27,11 +20,12 @@ class Api: ObservableObject {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = MethodApi.get.rawValue
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            handleError(data: data)
             throw APIError.invalidResponse
         }
         
@@ -46,11 +40,12 @@ class Api: ObservableObject {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = MethodApi.get.rawValue
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            handleError(data: data)
             throw APIError.invalidResponse
         }
         
@@ -66,13 +61,14 @@ class Api: ObservableObject {
         let patientData = encode(content: dataToCreate)
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = MethodApi.post.rawValue
         request.httpBody = patientData
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let (_, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+            handleError(data: data)
             throw APIError.invalidResponse
         }
     }
@@ -83,13 +79,14 @@ class Api: ObservableObject {
         }
                 
         var request = URLRequest(url: url)
-        request.httpMethod = "PATCH"
+        request.httpMethod = MethodApi.patch.rawValue
         request.httpBody = encode(content: dataToBeUpdated)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let (_, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+            handleError(data: data)
             throw APIError.invalidResponse
         }
     }
@@ -99,17 +96,17 @@ class Api: ObservableObject {
             throw APIError.invalidURL
         }
         var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
+        request.httpMethod = MethodApi.delete.rawValue
     
-        let (_, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+            handleError(data: data)
             throw APIError.invalidResponse
         }
     }
     
     func encode<T:Codable>(content: T) -> Data? {
-      
         do {
             let data = try JSONEncoder().encode(content)
             return data
@@ -122,6 +119,12 @@ class Api: ObservableObject {
     func decode<T: Decodable>(content: Data) throws -> T? {
         let decoder = JSONDecoder()
         return try? decoder.decode(T.self, from: content)
+    }
+    
+    func handleError(data: Data){
+        if let responseString = String(data: data, encoding: .utf8) {
+            print("Erro:\(responseString)")
+        }
     }
 }
 

@@ -28,13 +28,11 @@ struct PatientList: View {
                             Text(patient.name ?? "Nome indisponível")
                             Text(viewModel.formatPhoneNumber(patient.phoneNumber ?? ""))
                                 .font(.subheadline)
-
-                                
                         }
                     }
                 }
                 .refreshable(action: {
-                    await viewModel.loadPatients()
+                    await viewModel.loadPatients(method: .production)
                 })
                 .listStyle(PlainListStyle())
             }
@@ -59,7 +57,7 @@ struct PatientList: View {
 //        })
         
         .task {
-            await viewModel.loadPatients()
+            await viewModel.loadPatients(method: .production)
         }
         
         .padding()

@@ -25,7 +25,7 @@ struct CreatePatient: View {
             .tint(.red)
             
             Button("Create") {
-                viewModel.createPatient()
+                viewModel.createPatient(method: .production)
             }
         }
         .buttonStyle(.borderedProminent)
