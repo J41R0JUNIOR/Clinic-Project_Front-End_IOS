@@ -11,10 +11,10 @@ import Foundation
 class CreatePatientVM {
     var model = CreatePatientM()
     
-    func createPatient(){
+    func createPatient(method: CodeUrl){
         Task {
             
-            try await model.api.createData(dataToCreate: model.patient, urlString: URLs.createPatient.url)
+            try await model.api.createData(dataToCreate: model.patient, urlString: URLs.createPatient(method: method).url)
             model.router.pop()
         }
     }
