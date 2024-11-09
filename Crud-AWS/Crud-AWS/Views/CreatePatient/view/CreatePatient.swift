@@ -16,20 +16,25 @@ struct CreatePatient: View {
             }
      
         }
-        HStack {
-            Spacer()
-            
-            Button("Cancel") {
-                viewModel.model.router.pop()
+        VStack{
+            Text(viewModel.model.api.error)
+
+            HStack {
+                Spacer()
+                Button("Cancel") {
+                    viewModel.model.api.clearError()
+                    viewModel.model.router.pop()
+                }
+                .tint(.red)
+                
+                Button("Create") {
+                    viewModel.model.api.clearError()
+                    viewModel.createPatient(method: .production)
+                }
             }
-            .tint(.red)
-            
-            Button("Create") {
-                viewModel.createPatient(method: .production)
-            }
+            .buttonStyle(.borderedProminent)
+            .padding()
         }
-        .buttonStyle(.borderedProminent)
-        .padding()
     }
 }
 

@@ -12,3 +12,4 @@ enum APIError: Error{
     case invalidResponse
     case invalidData
 } 
+
