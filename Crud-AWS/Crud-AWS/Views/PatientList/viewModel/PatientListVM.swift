@@ -11,13 +11,13 @@ import Foundation
 class PatientListVM {
     var model = PatientListM()
     
-     func loadPatients() async {
+    func loadPatients(method: CodeUrl) async {
          model.patientsLoaded.removeAll()
          model.isLoading = true
          
          Task{
              do {
-                 if let patients: [Patient] = try await model.api.getAllData(urlString: URLs.getAllPatients.url){
+                 if let patients: [Patient] = try await model.api.getAllData(urlString: URLs.getAllPatients(method: method).url){
                      self.model.patientsLoaded = patients
                  }
                  model.isLoading = false

@@ -75,7 +75,7 @@ struct InfoPatient: View {
             Button {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 
-                viewModel.updatePatient()
+                viewModel.updatePatient(method: .production)
                 
             } label: {
                 Text("Update Patient")
@@ -85,7 +85,7 @@ struct InfoPatient: View {
             
             Button {
                 Task {
-                    try await viewModel.model.api.deleteData(urlString: URLs.deletePatient(id: viewModel.model.patient.id!).url)
+                    try await viewModel.model.api.deleteData(urlString: URLs.deletePatient(id: viewModel.model.patient.id!, method: .production).url)
                 }
                 viewModel.model.router.pop()
             } label: {
