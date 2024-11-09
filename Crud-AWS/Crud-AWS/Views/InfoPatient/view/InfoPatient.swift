@@ -85,10 +85,8 @@ struct InfoPatient: View {
             
             Button {
                 Task {
-                    do {
-                        try await viewModel.model.api.deleteData(urlString: URLs.deletePatient(id: viewModel.model.patient.id!, method: .production).url)
-                        viewModel.model.router.pop() // Será executado somente após a exclusão ser concluída
-                    }
+                    try await viewModel.model.api.deleteData(urlString: URLs.deletePatient(id: viewModel.model.patient.id!, method: .production).url)
+                    viewModel.model.router.pop()
                 }
             } label: {
                 Text("Delete Patient")
