@@ -29,6 +29,13 @@ class InfoPatientVM {
         }
     }
     
+    func deletePatient() {
+        Task {
+            try await model.api.deleteData(urlString: URLs.deletePatient(id: model.patient.id!, method: .production).url)
+            model.router.pop()
+        }
+    }
+    
     func calculateAge(from birthDate: Date) -> Int {
         let calendar = Calendar.current
         let ageComponents = calendar.dateComponents([.year], from: birthDate, to: Date())
