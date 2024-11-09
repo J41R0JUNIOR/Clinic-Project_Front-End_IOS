@@ -13,6 +13,8 @@ class Api: ObservableObject {
     
     static var shared = Api()
     
+    var error: String = .init()
+    
     func getAllData<T: Decodable>(urlString: String) async  throws -> T? {
         
         guard let url = URL(string: urlString) else {
@@ -120,12 +122,5 @@ class Api: ObservableObject {
         let decoder = JSONDecoder()
         return try? decoder.decode(T.self, from: content)
     }
-    
-    func handleError(data: Data){
-        if let responseString = String(data: data, encoding: .utf8) {
-            print("Erro:\(responseString)")
-        }
-    }
 }
-
 
