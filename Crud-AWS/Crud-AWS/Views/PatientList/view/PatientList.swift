@@ -28,8 +28,6 @@ struct PatientList: View {
                             Text(patient.name ?? "Nome indisponível")
                             Text(viewModel.formatPhoneNumber(patient.phoneNumber ?? ""))
                                 .font(.subheadline)
-
-                                
                         }
                     }
                 }
