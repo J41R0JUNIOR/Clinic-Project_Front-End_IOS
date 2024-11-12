@@ -8,11 +8,11 @@ struct CreatePatient: View {
         
         Form{
             Section(header: Text("Patient Details").font(.headline)){
-                PatientDetailsSection(patient: $viewModel.model.patient)
+                PatientDetails_CreatePatient(patient: $viewModel.model.patient)
             }
             
             Section(header: Text("Physical Metrics").font(.headline)) {
-                PatientMetricsSection(patient: $viewModel.model.patient)
+                PatientMetrics_CreatePatient(patient: $viewModel.model.patient)
             }
      
         }
