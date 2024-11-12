@@ -13,7 +13,7 @@ struct PatientDetails_CreatePatient: View {
     var body: some View {
      
             HStack {
-                Text("Name")
+                Text("Name:")
                 TextField("Enter name", text: Binding(
                     get: { patient.name ?? "" },
                     set: { patient.name = $0 }
