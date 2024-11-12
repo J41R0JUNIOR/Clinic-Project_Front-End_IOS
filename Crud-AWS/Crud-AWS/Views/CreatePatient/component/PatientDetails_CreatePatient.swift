@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PatientDetailsSection: View {
+struct PatientDetails_CreatePatient: View {
     @Binding var patient: Patient
     
     var body: some View {
@@ -45,12 +45,14 @@ struct PatientDetailsSection: View {
                     get: { patient.phoneNumber ?? "" },
                     set: { patient.phoneNumber = $0 }
                 ))
+            #if IOS
                 .keyboardType(.phonePad)
+            #endif
                 .textFieldStyle(.roundedBorder)
             }
     }
 }
 
 #Preview {
-    PatientDetailsSection(patient: .constant(.init(id: "1234567890", name: "John Doe")))
+    PatientDetails_CreatePatient(patient: .constant(.init(name: "Jairo")))
 }
