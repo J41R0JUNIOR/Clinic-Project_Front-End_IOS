@@ -24,10 +24,10 @@ struct PatientList: View {
                     Button{
                         viewModel.model.router.push(.patientDetails(patient))
                     } label: {
-                        VStack{
+                        VStack(alignment: .leading){
                             Text(patient.name ?? "Nome indisponível")
                             Text(viewModel.formatPhoneNumber(patient.phoneNumber ?? ""))
-                                .font(.subheadline)
+                                .font(.footnote)
                         }
                     }
                 }

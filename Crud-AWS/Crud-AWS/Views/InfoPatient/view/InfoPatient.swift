@@ -11,7 +11,7 @@ struct InfoPatient: View {
     var body: some View {
         Form {
             Section(header: Text("Patient Details").font(.headline)) {
-                PatientDetail_InfoPatient(viewModel: $viewModel)
+                PatientDetail_InfoPatient(patient: $viewModel.model.patient)
             }
             
             Section(header: Text("Physical Metrics").font(.headline)) {
@@ -21,13 +21,15 @@ struct InfoPatient: View {
         .navigationTitle("Patient Info")
         .padding()
         
+        Text(viewModel.model.api.error)
+        
         VStack {
             Button {
-#if IOS
+
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-#endif
-                
+
                 viewModel.updatePatient(method: .production)
+                viewModel.model.api.clearError()
                 
             } label: {
                 Text("Update Patient")
@@ -37,6 +39,7 @@ struct InfoPatient: View {
             
             Button {
                 viewModel.deletePatient()
+                viewModel.model.api.clearError()
             } label: {
                 Text("Delete Patient")
                     .frame(maxWidth: .infinity)

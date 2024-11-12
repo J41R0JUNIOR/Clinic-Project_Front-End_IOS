@@ -8,48 +8,52 @@
 import SwiftUI
 
 struct PatientDetail_InfoPatient: View {
-    @Binding var viewModel: InfoPatientVM
+    @Binding var patient: Patient
+    @Bindable var viewModel: PatientDetail_InfoPatientVM = .init()
     var body: some View {
         HStack {
             Text("Name")
             Spacer()
             
-            TextField( viewModel.model.patient.name!, text: Binding(
-                get: { viewModel.model.patient.name! },
-                set: { viewModel.model.patient.name = $0 }
+            TextField( "", text: Binding(
+                get: { patient.name! },
+                set: { patient.name = $0 }
             ))
         }
         
         HStack {
             Text("Health Service Number")
             Spacer()
-            Text(viewModel.model.patient.healthServiceNumber ?? "Not provided")
+            Text(patient.healthServiceNumber ?? "Not provided")
                 .foregroundColor(.secondary)
         }
         
         HStack {
             Text("Phone Number")
             Spacer()
-            Text(viewModel.model.patient.phoneNumber ?? "Not provided")
-                .foregroundColor(.secondary)
+            TextField( "", text: Binding(
+                get: { patient.phoneNumber ?? "" },
+                set: { patient.phoneNumber = $0 }
+            )).keyboardType(.phonePad)
         }
         
         HStack {
             Text("Age")
             Spacer()
-            Text("\(viewModel.calculateAge(from: viewModel.model.patient.birthDateAsDate)) years")
+            Text("\(viewModel.calculateAge(from: patient.birthDateAsDate)) years")
                 .foregroundColor(.secondary)
         }
         
         HStack {
             Text("Birth Date")
             Spacer()
-            DatePicker("Select date", selection: $viewModel.model.patient.birthDateAsDate, displayedComponents: .date)
+            DatePicker("Select date", selection: $patient.birthDateAsDate, displayedComponents: .date)
                 .labelsHidden()
         }
     }
+   
 }
 
 #Preview {
-    PatientDetail_InfoPatient(viewModel: .constant(.init(patient: .init(name: "John Doe"))))
+    PatientDetail_InfoPatient(patient: .constant(.init(name: "Jairo")))
 }
