@@ -15,9 +15,10 @@ struct Crud_AWSApp: App {
         WindowGroup {
             NavigationStack(path: $router.path) {
                 AuthView()
-            }.environmentObject(router)
-            .navigationDestination(for: RoutePath.self) { route in
-                route.findPath()
+                    .environmentObject(router)
+                    .navigationDestination(for: RoutePath.self) { route in
+                        route.findPath()
+                    }
             }
         }
     }

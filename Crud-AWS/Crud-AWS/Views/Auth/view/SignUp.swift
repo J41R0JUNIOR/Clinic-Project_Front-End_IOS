@@ -52,7 +52,7 @@ struct SignUp: View {
                     .textFieldStyle(.roundedBorder)
 
                 Button("Confirm") {
-                    viewModel.sighUpVerification()
+                    viewModel.signUpVerification()
                 }
                 .buttonStyle(.borderedProminent)
 
