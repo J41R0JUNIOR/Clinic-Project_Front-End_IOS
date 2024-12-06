@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var router: Router
+    @Bindable var router = Router.shared
+    
     var body: some View {
         VStack{
             Button("Show Patients"){

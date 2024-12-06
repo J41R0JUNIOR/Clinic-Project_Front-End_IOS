@@ -8,7 +8,7 @@
 import Foundation
 
 extension Api {
-    func handleError(data: Data) -> String{
+    func messageReceived(data: Data) -> String{
         if let responseString = String(data: data, encoding: .utf8) {
             var transformedResponse = responseString
             

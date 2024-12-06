@@ -16,6 +16,8 @@ class Api: ObservableObject {
     
     var error: String = .init()
     
+    var token: SignInResponse?
+    
     func getAllData<T: Decodable>(urlString: String) async  throws -> T? {
         
         guard let url = URL(string: urlString) else {
@@ -28,7 +30,7 @@ class Api: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            error = handleError(data: data)
+            error = messageReceived(data: data)
             throw APIError.invalidResponse
         }
         
@@ -48,7 +50,7 @@ class Api: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            error = handleError(data: data)
+            error = messageReceived(data: data)
             throw APIError.invalidResponse
         }
         
@@ -71,7 +73,7 @@ class Api: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            error = handleError(data: data)
+            error = messageReceived(data: data)
             throw APIError.invalidResponse
         }
     }
@@ -89,7 +91,7 @@ class Api: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            error = handleError(data: data)
+            error = messageReceived(data: data)
             throw APIError.invalidResponse
         }
     }
@@ -104,7 +106,7 @@ class Api: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            error = handleError(data: data)
+            error = messageReceived(data: data)
             throw APIError.invalidResponse
         }
     }

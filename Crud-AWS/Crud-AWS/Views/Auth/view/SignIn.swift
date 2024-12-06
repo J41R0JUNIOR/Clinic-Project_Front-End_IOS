@@ -16,6 +16,7 @@ struct SignIn: View {
             TextField("Password", text: $viewModel.model.password)
             
             Button("Sign In"){
+                viewModel.signIn()
             }.buttonStyle(.borderedProminent)
             
             Spacer()

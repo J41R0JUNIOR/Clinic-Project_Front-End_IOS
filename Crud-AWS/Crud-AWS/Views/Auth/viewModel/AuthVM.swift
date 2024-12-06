@@ -16,7 +16,7 @@ class AuthVM{
             do{
                 model.api.error = ""
                 
-                let user = SignUpUser(clientId: ClientId.clientId.rawValue, username: model.username, password: model.password, email: model.username)
+                let user = User(clientId: ClientId.clientId.rawValue, username: model.username, password: model.password, email: model.username)
                 try await model.api.signUp(user: user)
                 
                 if model.api.state == .signUpNotVerified {
@@ -26,18 +26,37 @@ class AuthVM{
         }
     }
     
-    func sighUpVerification() {
+    func signUpVerification() {
         Task {
             do{
                 model.api.error = ""
                 model.api.state = .signedOut
                 
-                let user = SignUpUser(clientId: ClientId.clientId.rawValue, username: model.username, code: model.confirmationCode)
-                try await model.api.sighUpConfirmation(user: user)
+                let user = User(clientId: ClientId.clientId.rawValue, username: model.username, code: model.confirmationCode)
+                try await model.api.signUpConfirmation(user: user)
                 
                 if model.api.state == .signUpVerified {
                     model.alert = false
                     model.signIn = true
+                }
+            }
+        }
+    }
+    
+    func signIn(){
+        Task{
+            do{
+                model.api.error = ""
+                model.api.state = .signedOut
+                
+                let user = User(clientId: ClientId.clientId.rawValue, username: model.username, password: model.password)
+                
+               try await model.api.signIn(user: user)
+                
+                if model.api.state == .signedIn {
+                    model.alert = false
+                    model.signIn = true
+                    model.router.push(.content)
                 }
             }
         }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SignUpUser: Codable {
+struct User: Codable {
     var clientId: String
     var username: String
     var password: String?
@@ -15,3 +15,8 @@ struct SignUpUser: Codable {
     var code: String?
 }
 
+struct SignInResponse: Decodable {
+    var accesToken: String
+    var refreshToken: String
+    var idToken: String
+}
