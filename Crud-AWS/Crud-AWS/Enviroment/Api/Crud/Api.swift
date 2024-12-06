@@ -10,6 +10,7 @@ import Foundation
 
 @Observable
 class Api: ObservableObject {
+    var state: AuthState = .signedOut
     
     static var shared = Api()
     
@@ -27,7 +28,7 @@ class Api: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            handleError(data: data)
+            error = handleError(data: data)
             throw APIError.invalidResponse
         }
         
@@ -47,7 +48,7 @@ class Api: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            handleError(data: data)
+            error = handleError(data: data)
             throw APIError.invalidResponse
         }
         
@@ -70,7 +71,7 @@ class Api: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            handleError(data: data)
+            error = handleError(data: data)
             throw APIError.invalidResponse
         }
     }
@@ -88,7 +89,7 @@ class Api: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            handleError(data: data)
+            error = handleError(data: data)
             throw APIError.invalidResponse
         }
     }
@@ -103,7 +104,7 @@ class Api: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            handleError(data: data)
+            error = handleError(data: data)
             throw APIError.invalidResponse
         }
     }
