@@ -10,6 +10,8 @@ import SwiftUI
 @main
 struct Crud_AWSApp: App {
     @Bindable var router = Router.shared
+    @Bindable var api = Api.shared
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $router.path) {

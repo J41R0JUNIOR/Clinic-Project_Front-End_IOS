@@ -8,16 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var router: Router
+    @Bindable var router = Router.shared
+    
     var body: some View {
         VStack{
-            Button("Show Patients"){
+            
+        }
+      
+        .task {
+            print("opaodaosfaps")
+            if Api.shared.state == .signedIn {
                 router.push(.patientList)
-            }
-            Button("Show Doctors"){
+                print("epa")
+            }else{
                 
+                print("opa")
+                router.push(.auth)
             }
-        }.buttonStyle(.borderedProminent)
+        }
+     
     }
 }
 

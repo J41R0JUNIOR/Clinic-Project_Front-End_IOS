@@ -8,7 +8,7 @@
 import Foundation
 
 extension Api {
-    func handleError(data: Data){
+    func messageReceived(data: Data) -> String{
         if let responseString = String(data: data, encoding: .utf8) {
             var transformedResponse = responseString
             
@@ -16,8 +16,11 @@ extension Api {
                 char == "\"" || char == "\\"
             }
             
-            self.error = .init(transformedResponse)
+            print(transformedResponse)
+       
+            return .init(transformedResponse)
         }
+        return ""
     }
     
     func clearError(){
