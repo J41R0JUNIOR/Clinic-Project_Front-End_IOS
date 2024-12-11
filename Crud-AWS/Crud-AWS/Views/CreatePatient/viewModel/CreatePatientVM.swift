@@ -11,9 +11,9 @@ import Foundation
 class CreatePatientVM {
     var model = CreatePatientM()
     
-    func createPatient(method: CodeUrl){
+    func createPatient(){
         Task {
-            try await model.api.createData(dataToCreate: model.patient, urlString: URLs.createPatient(method: method).url)
+            try await model.api.createData(dataToCreate: model.patient, urlString: URLs.createPatient.url)
             model.router.pop()
         }
     }

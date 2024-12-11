@@ -13,13 +13,15 @@ public struct RoutePath: Hashable {
         case .none:
             EmptyView()
         case .content:
-            ContentView()
+            ContentView().navigationBarBackButtonHidden()
         case .patientList:
-            PatientList()
+            PatientList().navigationBarBackButtonHidden()
         case .patientDetails(let patientInfo):
             InfoPatient(patient: patientInfo)
         case .createPatient:
             CreatePatient()
+        case .auth:
+            AuthView().navigationBarBackButtonHidden()
         }
     }
 }

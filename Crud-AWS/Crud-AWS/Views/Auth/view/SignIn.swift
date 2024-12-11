@@ -12,7 +12,10 @@ struct SignIn: View {
     var body: some View {
         VStack{
             Spacer()
-            TextField("Username", text: $viewModel.model.username)
+            TextField("Email", text: $viewModel.model.username)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+            
             TextField("Password", text: $viewModel.model.password)
             
             Button("Sign In"){

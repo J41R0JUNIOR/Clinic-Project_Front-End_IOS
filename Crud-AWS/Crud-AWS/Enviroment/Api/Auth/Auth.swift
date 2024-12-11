@@ -17,7 +17,7 @@ enum AuthState {
 extension Api {
     
     func signUp(user: User) async throws {
-        let urlString = URLs.authSignUp(method: .production).url
+        let urlString = URLs.authSighUp.url
         
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
@@ -43,7 +43,7 @@ extension Api {
     }
     
     func signUpConfirmation(user: User) async throws {
-        let urlString = URLs.authSignUpConfirmation(method: .production).url
+        let urlString = URLs.confirmSignUp.url
         
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
@@ -69,7 +69,7 @@ extension Api {
     }
     
     func signIn(user: User) async  throws {
-        let urlString = URLs.authSignIn(method: .production).url
+        let urlString = URLs.authSignIn.url
         
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
@@ -86,7 +86,7 @@ extension Api {
         
         if messageReceived(data: data).contains("User signed in successfully"){
             self.state = .signedIn
-            print(messageReceived(data: data))
+            
         }
                 
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode){
@@ -95,7 +95,5 @@ extension Api {
         }
         
         self.token = try decode(content: data)
-        
-        
     }
 }

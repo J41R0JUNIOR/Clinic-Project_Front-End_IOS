@@ -14,7 +14,6 @@ struct AuthView: View {
         VStack{
             Text("Login Page").font(.system(size: 30, weight: .bold))
            
-            
             if viewModel.model.signIn{
                 SignIn(viewModel: viewModel)
             }else{

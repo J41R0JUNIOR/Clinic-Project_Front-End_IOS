@@ -28,7 +28,7 @@ struct InfoPatient: View {
 
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 
-                viewModel.updatePatient(method: .production)
+                viewModel.updatePatient()
                 viewModel.model.api.clearError()
                 
             } label: {

@@ -32,7 +32,7 @@ struct PatientList: View {
                     }
                 }
                 .refreshable(action: {
-                    await viewModel.loadPatients(method: .production)
+                    await viewModel.loadPatients()
                 })
                 .listStyle(PlainListStyle())
             }
@@ -57,7 +57,7 @@ struct PatientList: View {
 //        })
         
         .task {
-            await viewModel.loadPatients(method: .production)
+            await viewModel.loadPatients()
         }
         
         .padding()
