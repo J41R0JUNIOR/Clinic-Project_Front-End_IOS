@@ -5,6 +5,7 @@ enum Routes {
     case patientList
     case patientDetails(Patient)
     case createPatient
+    case auth
     case none
 }
 

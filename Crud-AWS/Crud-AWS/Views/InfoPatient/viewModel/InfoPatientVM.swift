@@ -15,12 +15,12 @@ class InfoPatientVM {
         self.model = .init(patient: patient)
     }
     
-    func updatePatient(method: CodeUrl) {
+    func updatePatient() {
         Task {
             if let patientID = model.patient.id {
-                try await model.api.updateData(dataToBeUpdated: model.patient, urlString: URLs.updatePatient(id: patientID, method: method).url)
+                try await model.api.updateData(dataToBeUpdated: model.patient, urlString: URLs.updatePatient(id: patientID).url)
                 
-                if let updatedPatient: Patient = try await model.api.getDataById(urlString: URLs.getPatientById(id: patientID, method: method).url) {
+                if let updatedPatient: Patient = try await model.api.getDataById(urlString: URLs.getPatientById(id: patientID).url) {
                     self.model.patient = updatedPatient
                 }
             }
@@ -29,7 +29,7 @@ class InfoPatientVM {
     
     func deletePatient() {
         Task {
-            try await model.api.deleteData(urlString: URLs.deletePatient(id: model.patient.id!, method: .production).url)
+            try await model.api.deleteData(urlString: URLs.deletePatient(id: model.patient.id!).url)
             model.router.pop()
         }
     }

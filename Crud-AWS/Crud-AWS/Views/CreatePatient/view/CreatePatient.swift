@@ -29,7 +29,7 @@ struct CreatePatient: View {
                 
                 Button("Create") {
                     viewModel.model.api.clearError()
-                    viewModel.createPatient(method: .production)
+                    viewModel.createPatient()
                 }
             }
             .buttonStyle(.borderedProminent)

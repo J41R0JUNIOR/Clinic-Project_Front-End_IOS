@@ -56,7 +56,8 @@ class AuthVM{
                 if model.api.state == .signedIn {
                     model.alert = false
                     model.signIn = true
-                    model.router.push(.content)
+//                    model.router.push(.content)
+                    model.router.pop()
                 }
             }
         }

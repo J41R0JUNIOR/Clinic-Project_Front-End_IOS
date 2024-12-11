@@ -8,15 +8,7 @@
 
 import Foundation
 
-@Observable
-class Api: ObservableObject {
-    var state: AuthState = .signedOut
-    
-    static var shared = Api()
-    
-    var error: String = .init()
-    
-    var token: SignInResponse?
+extension Api{
     
     func getAllData<T: Decodable>(urlString: String) async  throws -> T? {
         

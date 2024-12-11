@@ -15,6 +15,8 @@ extension Api {
             transformedResponse.removeAll { char in
                 char == "\"" || char == "\\"
             }
+            
+            print(transformedResponse)
        
             return .init(transformedResponse)
         }

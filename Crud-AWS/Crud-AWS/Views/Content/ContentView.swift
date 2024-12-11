@@ -12,14 +12,21 @@ struct ContentView: View {
     
     var body: some View {
         VStack{
-            Button("Show Patients"){
+            
+        }
+      
+        .task {
+            print("opaodaosfaps")
+            if Api.shared.state == .signedIn {
                 router.push(.patientList)
-            }
-            Button("Show Doctors"){
+                print("epa")
+            }else{
                 
+                print("opa")
+                router.push(.auth)
             }
-        }.buttonStyle(.borderedProminent)
-        
+        }
+     
     }
 }
 
