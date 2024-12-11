@@ -8,7 +8,7 @@
 import Foundation
 
 enum BaseUrl: String {
-    case aws = "https://oortbbeqid.execute-api.us-east-1.amazonaws.com/dev/"
+    case aws = "https://yoururl.execute-api.us-east-1.amazonaws.com/dev/"
 }
 
 enum URLs {
@@ -53,5 +53,5 @@ enum URLs {
 }
 
 enum ClientId: String {
-    case clientId = "69ei4lganceag4esfpf26e58g3"
+    case clientId = "yourClientId"
 }
