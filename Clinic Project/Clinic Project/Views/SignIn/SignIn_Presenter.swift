@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+class SignIn_Presenter{
+    
+    func userSignInSuccess(user: Model.SignInReturn){
+        
+    }
+}

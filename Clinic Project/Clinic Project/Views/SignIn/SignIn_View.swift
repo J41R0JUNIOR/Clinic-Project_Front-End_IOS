@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SignInView: View {
-    var interactor: SignIn_Interactor
     @StateObject var viewModel: SignIn_ViewModel
     
     var body: some View {
@@ -23,9 +22,8 @@ struct SignInView: View {
         }.padding()
         
         Button("Sign In"){
-            Task{
-                await viewModel.signIn()
-            }
+            viewModel.signIn()
+            
         }.buttonStyle(.borderedProminent)
         
         Spacer()
@@ -41,5 +39,5 @@ struct SignInView: View {
 }
 
 #Preview {
-    SignInView(interactor: .init(), viewModel: .init())
+    SignInView(viewModel: .init())
 }

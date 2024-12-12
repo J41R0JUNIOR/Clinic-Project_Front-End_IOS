@@ -7,52 +7,28 @@
 
 import Foundation
 
-class SignIn_Interactor{
+class SignIn_Interactor {
     private var worker: SignInWorker
+    private var presenter: SignIn_Presenter
     
-    init(worker: SignInWorker = .init()) {
+    init(worker: SignInWorker = .init(), presenter: SignIn_Presenter = .init()) {
         self.worker = worker
+        self.presenter = presenter
     }
     
-    func authenticateUser(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void) async {
+    func signIn(username: String, password: String) {
+        print("Autenticando usuário...")
         
-        do{
-            let signInReturn = try  await worker.signIn(user: Model.User(clientId: ClientId.clientId.rawValue, username: username, password: password)) ?? .init(accessToken: "", idToken: "", refreshToken: "")
-            completion(.success(signInReturn))
-        } catch {
-            completion(.failure(error))
+        worker.authenticateUser(username: username, password: password) { result in
+            switch result {
+            case .success(let user):
+                print("Usuário autenticado com sucesso: \(user)")
+                self.presenter.userSignInSuccess(user: user)
+                
+            case .failure(let error):
+                print("Erro na autenticação: \(error.localizedDescription)")
+//                self.presenter.userSignInFailure(error: error)
+            }
         }
-    }
-}
-
-protocol SignInWorkerProtocol {
-    func signIn(user: Model.SignInReturn) async  throws
-}
-
-struct SignInWorker {
-    
-    func signIn(user: Model.User) async throws -> Model.SignInReturn? {
-        let urlString = URLs.authSignIn.url
-        
-        guard let url = URL(string: urlString) else {
-            throw APIError.invalidURL
-        }
-        
-        let user = Utility.shared.encode(content: user)
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = MethodApi.post.rawValue
-        request.httpBody = user
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode){
-            throw APIError.invalidResponse
-        }
-        
-        let returned: Model.SignInReturn? = try Utility.shared.decode(content: data)
-        
-        return returned
     }
 }
