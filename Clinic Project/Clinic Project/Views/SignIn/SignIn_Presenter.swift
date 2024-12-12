@@ -7,9 +7,29 @@
 
 import Foundation
 
-class SignIn_Presenter{
+protocol SignInPresenterProtocol {
+    func userSignInSuccess(user: Model.SignInReturn)
+    func userSignInFailure(error: Error)
+}
+
+class SignIn_Presenter: SignInPresenterProtocol {
+    weak var viewModel: SignIn_ViewModel?
     
-    func userSignInSuccess(user: Model.SignInReturn){
-        
+    init(viewModel: SignIn_ViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    func userSignInSuccess(user: Model.SignInReturn) {
+        DispatchQueue.main.async {
+            self.viewModel?.isAuthenticated = true
+            self.viewModel?.message = "Usuário autenticado com sucesso!"
+        }
+    }
+    
+    func userSignInFailure(error: Error) {
+        DispatchQueue.main.async {
+            self.viewModel?.isAuthenticated = false
+            self.viewModel?.message = error.localizedDescription
+        }
     }
 }

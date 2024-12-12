@@ -9,9 +9,9 @@ import Foundation
 
 class SignIn_Interactor {
     private var worker: SignInWorker
-    private var presenter: SignIn_Presenter
+    private var presenter: SignInPresenterProtocol
     
-    init(worker: SignInWorker = .init(), presenter: SignIn_Presenter = .init()) {
+    init(worker: SignInWorker = .init(), presenter: SignInPresenterProtocol) {
         self.worker = worker
         self.presenter = presenter
     }
@@ -22,12 +22,9 @@ class SignIn_Interactor {
         worker.authenticateUser(username: username, password: password) { result in
             switch result {
             case .success(let user):
-                print("Usuário autenticado com sucesso: \(user)")
                 self.presenter.userSignInSuccess(user: user)
-                
             case .failure(let error):
-                print("Erro na autenticação: \(error.localizedDescription)")
-//                self.presenter.userSignInFailure(error: error)
+                self.presenter.userSignInFailure(error: error)
             }
         }
     }

@@ -7,15 +7,20 @@
 
 import Foundation
 
-
-
 class SignIn_ViewModel: ObservableObject {
     @Published var username: String = ""
     @Published var password: String = ""
-    private var interactor = SignIn_Interactor()
- 
+    @Published var isAuthenticated: Bool = false
+    @Published var message: String = ""
+    
+    private var interactor: SignIn_Interactor?
+    
+    init() {
+        let presenter = SignIn_Presenter(viewModel: self)
+        self.interactor = SignIn_Interactor(presenter: presenter)
+    }
+    
     func signIn() {
-         interactor.signIn(username: username, password: password)
-       }
+        interactor?.signIn(username: username, password: password)
+    }
 }
-

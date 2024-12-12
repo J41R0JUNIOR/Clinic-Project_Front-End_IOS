@@ -35,7 +35,6 @@ class Utility{
                 char == "\"" || char == "\\"
             }
             
-            print(transformedResponse)
             
             return .init(transformedResponse)
         }
