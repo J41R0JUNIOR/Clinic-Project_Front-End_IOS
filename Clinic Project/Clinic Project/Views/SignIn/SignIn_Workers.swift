@@ -19,8 +19,10 @@ struct SignInWorker: SignInWorkerProtocol {
             do {
                 let signInReturn = try await authenticateUser(username: username, password: password)
                 completion(.success(signInReturn))
+                
             } catch {
                 completion(.failure(error))
+                
             }
         }
     }
