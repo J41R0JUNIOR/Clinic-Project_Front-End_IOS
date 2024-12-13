@@ -13,12 +13,8 @@ class SignIn_ViewModel: ObservableObject {
     @Published var isAuthenticated: Bool = false
     @Published var message: String = ""
     
-    private var interactor: SignIn_Interactor?
-    
-    init() {
-        let presenter = SignIn_Presenter(viewModel: self)
-        self.interactor = SignIn_Interactor(presenter: presenter)
-    }
+    var interactor: SignIn_Interactor?
+    var router: Routes?
     
     func signIn() {
         interactor?.signIn(username: username, password: password)
