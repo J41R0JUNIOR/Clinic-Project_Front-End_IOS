@@ -61,7 +61,10 @@ struct SignInView: View {
             }
         }.task{
             viewModel.tryAutoSignIn()
-        }.padding()
+        }.onChange(of: viewModel.state, { _, _ in
+            viewModel.handleStateChange()
+        })
+        .padding()
     }
 }
 
