@@ -21,14 +21,18 @@ class SignIn_ViewModel {
     var container: ModelContainer?
     var context: ModelContext?
     
-    init(){
-        do{
-            self.container = try? ModelContainer(for: Model.LoginUserSwiftData.self)
-            if let container = container{
-                self.context = ModelContext(container)
+    init() {
+        do {
+            container = try ModelContainer(for: Model.LoginUserSwiftData.self)
+            if let container {
+                context = ModelContext(container)
+                print("ModelContainer initialized successfully")
             }
+        } catch {
+            print("Error initializing ModelContainer: \(error)")
         }
     }
+
     
     func signIn() {
         interactor?.signIn(username: username, password: password)
