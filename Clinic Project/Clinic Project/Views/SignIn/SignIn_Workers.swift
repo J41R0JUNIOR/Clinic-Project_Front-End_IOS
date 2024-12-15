@@ -9,11 +9,11 @@ import Foundation
 
 import Foundation
 
-protocol SignInWorkerProtocol {
+protocol SignInAuthWorkerProtocol {
     func authenticateUser(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void)
 }
 
-struct SignInWorker: SignInWorkerProtocol {
+struct AuthWorker: SignInAuthWorkerProtocol {
     func authenticateUser(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void) {
         Task {
             do {
@@ -55,3 +55,4 @@ struct SignInWorker: SignInWorkerProtocol {
         return signInReturn
     }
 }
+
