@@ -22,22 +22,19 @@ class SignIn_Presenter: SignInPresenterProtocol {
     
     func userSignInSuccess(user: Model.SignInReturn) {
         DispatchQueue.main.async {
-            self.viewModel?.isAuthenticated = true
             self.viewModel?.message = "Usuário autenticado com sucesso!"
-            
+            self.viewModel?.state = .logged
         }
     }
     
     func userSignInFailure(error: Error) {
         DispatchQueue.main.async {
-            self.viewModel?.isAuthenticated = false
             self.viewModel?.message = error.localizedDescription
         }
     }
     
     func noUserSaved() {
         DispatchQueue.main.async {
-            self.viewModel?.isAuthenticated = false
             self.viewModel?.message = "Nenhum usuário salvo!"
         }
     }
