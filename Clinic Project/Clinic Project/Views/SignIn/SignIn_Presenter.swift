@@ -10,6 +10,7 @@ import Foundation
 protocol SignInPresenterProtocol {
     func userSignInSuccess(user: Model.SignInReturn)
     func userSignInFailure(error: Error)
+    func noUserSaved()
 }
 
 class SignIn_Presenter: SignInPresenterProtocol {
@@ -23,6 +24,7 @@ class SignIn_Presenter: SignInPresenterProtocol {
         DispatchQueue.main.async {
             self.viewModel?.isAuthenticated = true
             self.viewModel?.message = "Usuário autenticado com sucesso!"
+            
         }
     }
     
@@ -30,6 +32,13 @@ class SignIn_Presenter: SignInPresenterProtocol {
         DispatchQueue.main.async {
             self.viewModel?.isAuthenticated = false
             self.viewModel?.message = error.localizedDescription
+        }
+    }
+    
+    func noUserSaved() {
+        DispatchQueue.main.async {
+            self.viewModel?.isAuthenticated = false
+            self.viewModel?.message = "Nenhum usuário salvo!"
         }
     }
 }

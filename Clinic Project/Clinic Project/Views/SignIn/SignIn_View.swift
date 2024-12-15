@@ -8,33 +8,60 @@
 import SwiftUI
 
 struct SignInView: View {
-    @StateObject var viewModel: SignIn_ViewModel
+    @Bindable var viewModel: SignIn_ViewModel
     
     var body: some View {
-        Spacer()
-        
-        VStack{ 
-            TextField("Email", text: $viewModel.username)
+        VStack{
+            Spacer()
+            
+            Text("Email:")
+            TextField("Type your email", text: $viewModel.username)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
+                .textContentType(.emailAddress)
+                .textFieldStyle(.roundedBorder)
             
-            TextField("Password", text: $viewModel.password)
-        }.padding()
-        
-        Button("Sign In"){
-            viewModel.signIn()
+            Text("Password:")
+            SecureField("type your password", text: $viewModel.password).textContentType(.password)
+                .textFieldStyle(.roundedBorder)
             
-        }.buttonStyle(.borderedProminent)
-        
-        Spacer()
-        
-        HStack{
-            Text("Don't have an account?")
-            Button("Sign Up") {
+            HStack{
+                Button {
+                    viewModel.rememberMe.toggle()
+                } label: {
+                    HStack {
+                        Image(systemName: viewModel.rememberMe ? "checkmark.square.fill" : "square")
+                            .foregroundColor(viewModel.rememberMe ? .blue : .gray)
+                            .font(.system(size: 15))
+                    }
+                }
+                Text("Remember Me")
+                    .foregroundColor(.primary)
+                    .font(.subheadline)
                 
+                Spacer()
+            }.padding()
+            
+            Spacer()
+            
+            Button {
+                viewModel.signIn()
+            } label: {
+                HStack{
+                    Spacer()
+                    Text("Sign In")
+                    Spacer()
+                }
+            }.buttonStyle(.borderedProminent)
+            
+            HStack{
+                Text("Don't have an account?")
+                Button("Sign Up") {
+                }
             }
-        }
-        
+        }.task{
+            viewModel.tryAutoSignIn()
+        }.padding()
     }
 }
 

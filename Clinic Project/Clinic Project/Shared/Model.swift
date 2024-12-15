@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import SwiftData
 
-struct Model {
+enum Model {
     struct User: Codable {
         var clientId: String?
         var username: String
@@ -52,4 +53,24 @@ struct Model {
             }
         }
     }
+    
+    @Model
+    class LoginUserSwiftData {
+        var username: String
+        var password: String
+        var accessToken: String
+        var idToken: String
+        var refreshToken: String
+        
+        init(username: String, password: String, accessToken: String, idToken: String, refreshToken: String) {
+            self.username = username
+            self.password = password
+            self.accessToken = accessToken
+            self.idToken = idToken
+            self.refreshToken = refreshToken
+        }
+    }
 }
+
+
+
