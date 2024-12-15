@@ -14,14 +14,20 @@ struct SignInView: View {
         VStack{
             Spacer()
             
-            Text("Email:")
+            HStack{
+                Text("Email:")
+                Spacer()
+            }
             TextField("Type your email", text: $viewModel.username)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textContentType(.emailAddress)
                 .textFieldStyle(.roundedBorder)
             
-            Text("Password:")
+            HStack{
+                Text("Password:")
+                Spacer()
+            }
             SecureField("type your password", text: $viewModel.password).textContentType(.password)
                 .textFieldStyle(.roundedBorder)
             
