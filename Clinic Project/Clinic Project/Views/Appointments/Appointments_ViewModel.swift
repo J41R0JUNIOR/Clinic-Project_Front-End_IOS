@@ -14,5 +14,5 @@ class Appointments_ViewModel {
     var interactor: Appointments_Interactor?
     var router: Routes?
     
-    func load
+//    func load
 }
