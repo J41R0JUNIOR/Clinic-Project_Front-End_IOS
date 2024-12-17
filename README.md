@@ -46,6 +46,11 @@ This repository contains the front-end of a clinic application developed in Swif
 - **Doctor Management**: Similar functionalities as patient management.
 - **Appointment Scheduling**: Schedule, view, and cancel appointments.
 
+## Flow
+![Flow](https://raw.githubusercontent.com/J41R0JUNIOR/Clinic-Project_Front-End_IOS/bringing-to-vip/Flow.png)
+
+
+
 ## Contributions
 
 Contributions are welcome! Feel free to open issues or submit pull requests.
