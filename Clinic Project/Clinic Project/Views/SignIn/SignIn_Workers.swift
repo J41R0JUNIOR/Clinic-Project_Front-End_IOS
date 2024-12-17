@@ -22,7 +22,6 @@ struct AuthWorker: SignInAuthWorkerProtocol {
                 
             } catch {
                 completion(.failure(error))
-                
             }
         }
     }

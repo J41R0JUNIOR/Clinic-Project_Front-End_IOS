@@ -26,7 +26,6 @@ class SignIn_ViewModel {
             container = try ModelContainer(for: Model.LoginUserSwiftData.self)
             if let container {
                 context = ModelContext(container)
-//                print("ModelContainer initialized successfully")
             }
         } catch {
             print("Error initializing ModelContainer: \(error)")

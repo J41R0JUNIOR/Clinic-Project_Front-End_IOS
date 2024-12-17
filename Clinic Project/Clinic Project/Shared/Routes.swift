@@ -52,7 +52,7 @@ class Routes {
     }
     
     func createDoctorContentModule() -> UIViewController {
-        let viewController = UIHostingController(rootView: DoctorContent_View())
+        let viewController = UIHostingController(rootView: DoctorContent_View().navigationBarBackButtonHidden())
         
         return viewController
     }
