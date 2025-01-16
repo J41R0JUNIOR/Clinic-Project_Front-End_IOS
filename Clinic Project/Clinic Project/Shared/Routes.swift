@@ -8,13 +8,20 @@
 import Foundation
 import UIKit
 import SwiftUI
+import Auth
 
-enum Destination {
+public enum Destination {
     case signIn
     case doctorContent
 }
 
-class Routes {
+@MainActor
+public class Routes: AuthNavigationDelegate {
+    public func backToMainRoutes() {
+        navigate(to: .doctorContent)
+        print("chamou em")
+    }
+    
     let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
@@ -28,28 +35,22 @@ class Routes {
     func navigate(to destination: Destination) {
         switch destination {
         case .signIn:
-            let view = createSignInModule()
-            navigationController.pushViewController(view, animated: true)
+            let authRoutes = AuthRoutes(navigationController: navigationController, delegate: self)
+            authRoutes.start()
+            
         case .doctorContent:
             let view = createDoctorContentModule()
             navigationController.pushViewController(view, animated: true)
-            
         }
     }
+
     
     func createSignInModule() -> UIViewController {
-        let viewModel = SignIn_ViewModel()
-        let viewController = UIHostingController(rootView: SignInView(viewModel: viewModel))
-        let presenter = SignIn_Presenter(viewModel: viewModel)
-        let interactor = SignIn_Interactor(presenter: presenter)
-        
-        viewModel.interactor = interactor
-        viewModel.router = self
-        presenter.viewModel = viewModel
-        interactor.presenter = presenter
-        
-        return viewController
-    }
+            let authRoutes = AuthRoutes(navigationController: navigationController)
+            authRoutes.delegate = self  
+            authRoutes.start()
+            return UIViewController()
+        }
     
     func createDoctorContentModule() -> UIViewController {
         let viewController = UIHostingController(rootView: DoctorContent_View().navigationBarBackButtonHidden())

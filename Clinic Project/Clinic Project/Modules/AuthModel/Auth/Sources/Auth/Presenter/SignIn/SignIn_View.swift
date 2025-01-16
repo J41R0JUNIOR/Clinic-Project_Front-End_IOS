@@ -7,11 +7,16 @@
 
 import SwiftUI
 
-struct SignInView: View {
+public struct SignInView: View {
     @Bindable var viewModel: SignIn_ViewModel
     
-    var body: some View {
+    public init(viewModel: SignIn_ViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    public var body: some View {
         VStack{
+           
             Spacer()
             
             HStack{

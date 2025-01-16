@@ -12,17 +12,18 @@ protocol SignInInteractorProtocol {
 //    func tryAutoSignIn(modelContainer: ModelContainer?)
 }
 
-class SignIn_Interactor: SignInInteractorProtocol {
+@MainActor
+public class SignIn_Interactor: SignInInteractorProtocol {
     
-    private var authWorker: AuthWorker
-    var presenter: SignInPresenterProtocol
+    public var authWorker: AuthWorker
+    public var presenter: SignInPresenterProtocol
     
-    init(authWorker: AuthWorker = .init(), presenter: SignInPresenterProtocol) {
+    public init(authWorker: AuthWorker = .init(), presenter: SignInPresenterProtocol) {
         self.authWorker = authWorker
         self.presenter = presenter
     }
     
-    func signIn(username: String, password: String, rememberMe: Bool = false) {
+     func signIn(username: String, password: String, rememberMe: Bool = false) {
 //        print("Authenticating user...")
         
         authWorker.authenticateUser(username: username, password: password) { result in
@@ -44,7 +45,7 @@ class SignIn_Interactor: SignInInteractorProtocol {
         }
     }
     
-    func tryAutoSignIn() {
+     func tryAutoSignIn() {
         SwiftDataService.shared.fetch { result in
             switch result {
             case .success(let users):

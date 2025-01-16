@@ -8,20 +8,23 @@
 import Foundation
 import SwiftData
 
+
 @Observable
-class SignIn_ViewModel {
+public class SignIn_ViewModel {
     var username: String = ""
     var password: String = ""
     var message: String = ""
     var rememberMe: Bool = false
     var state: State = .signOut
     
-    var interactor: SignIn_Interactor?
-    var router: Routes?
+    public var interactor: SignIn_Interactor?
+    public var router: AuthRoutes?
     var container: ModelContainer?
     var context: ModelContext?
     
-    init() {
+    
+    
+    public init() {
         do {
             container = try ModelContainer(for: Model.LoginUserSwiftData.self)
             if let container {
@@ -32,18 +35,18 @@ class SignIn_ViewModel {
         }
     }
     
-    
-    func signIn() {
+    @MainActor func signIn() {
         interactor?.signIn(username: username, password: password, rememberMe: rememberMe)
     }
     
-    func tryAutoSignIn(){
+    @MainActor func tryAutoSignIn() {
         interactor?.tryAutoSignIn()
     }
     
-    func handleStateChange() {
+    @MainActor func handleStateChange() {
         if state == .logged {
-            router?.navigate(to: .doctorContent)
+            print("logou handleStateChange")
+            router?.delegate?.backToMainRoutes()
             
         }
     }

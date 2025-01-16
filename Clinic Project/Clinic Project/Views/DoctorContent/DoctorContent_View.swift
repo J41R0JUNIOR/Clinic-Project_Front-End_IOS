@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-struct DoctorContent_View: View {
-    var body: some View {
+public struct DoctorContent_View: View {
+    public init() {}
+    
+    public var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }

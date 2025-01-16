@@ -13,7 +13,10 @@ protocol SignInAuthWorkerProtocol {
     func authenticateUser(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void)
 }
 
-struct AuthWorker: SignInAuthWorkerProtocol {
+@MainActor
+public struct AuthWorker: @preconcurrency SignInAuthWorkerProtocol {
+    public init() {}
+    
     func authenticateUser(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void) {
         Task {
             do {
@@ -27,14 +30,14 @@ struct AuthWorker: SignInAuthWorkerProtocol {
     }
 
     private func authenticateUser(username: String, password: String) async throws -> Model.SignInReturn {
-        let urlString = URLs.authSignIn.url
+        let urlString = AuthURLs.authSignIn.url
         
         guard let url = URL(string: urlString) else {
             throw Errors.invalidURL
         }
         
         let user = Model.User(clientId: ClientId.clientId.rawValue, username: username, password: password)
-        let encodedUser = Utility.shared.encode(content: user)
+        let encodedUser = await Utility.shared.encode(content: user)
         
         var request = URLRequest(url: url)
         request.httpMethod = MethodApi.post.rawValue
@@ -47,7 +50,7 @@ struct AuthWorker: SignInAuthWorkerProtocol {
             throw Errors.invalidResponse
         }
         
-        guard let signInReturn: Model.SignInReturn = try Utility.shared.decode(content: data) else {
+        guard let signInReturn: Model.SignInReturn = try await Utility.shared.decode(content: data) else {
             throw Errors.decodingFailed
         }
         

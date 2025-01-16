@@ -8,12 +8,13 @@
 import Foundation
 import SwiftData
 
-class SwiftDataService {
+@MainActor
+public class SwiftDataService {
     static var shared = SwiftDataService()
     var container: ModelContainer?
     var context: ModelContext?
     
-    init() {
+    public init() {
         do {
             container = try ModelContainer(for: Model.LoginUserSwiftData.self)
             if let container {
