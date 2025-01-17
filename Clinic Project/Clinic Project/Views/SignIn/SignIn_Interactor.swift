@@ -8,8 +8,8 @@
 import Foundation
 
 protocol SignInInteractorProtocol {
-//    func signIn(username: String, password: String)
-//    func tryAutoSignIn(modelContainer: ModelContainer?)
+    //    func signIn(username: String, password: String)
+    //    func tryAutoSignIn(modelContainer: ModelContainer?)
 }
 
 class SignIn_Interactor: SignInInteractorProtocol {
@@ -27,7 +27,7 @@ class SignIn_Interactor: SignInInteractorProtocol {
         authWorker.authenticateUser(username: username, password: password) { result in
             switch result {
             case .success(let user):
-          
+                
                 self.presenter.userSignInSuccess(user: user)
                 
                 if rememberMe{
@@ -48,11 +48,20 @@ class SignIn_Interactor: SignInInteractorProtocol {
             case .success(let users):
                 if let firstUser = users.first {
                     self.signIn(username: firstUser.username, password: firstUser.password)
+                    return
                 }
+                
+                let noUsersError = NSError(
+                    domain: "AutoSignIn",
+                    code: 404,
+                    userInfo: [NSLocalizedDescriptionKey: "No users found in the database."]
+                )
+                self.presenter.userSignInFailure(error: noUsersError)
             case .failure(let error):
                 print("Error looking for users: \(error)")
+                self.presenter.userSignInFailure(error: error)
             }
         }
     }
-
+    
 }

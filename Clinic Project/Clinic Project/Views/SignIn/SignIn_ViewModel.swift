@@ -15,6 +15,7 @@ class SignIn_ViewModel {
     var message: String = ""
     var rememberMe: Bool = false
     var state: State = AppState.shared.state
+    var isRefreshing: Bool = false
     
     var interactor: SignIn_Interactor?
     var router: Routes?
@@ -34,10 +35,12 @@ class SignIn_ViewModel {
     
     
     func signIn() {
+        isRefreshing = true
         interactor?.signIn(username: username, password: password, rememberMe: rememberMe)
     }
     
     func tryAutoSignIn(){
+        isRefreshing = true
         interactor?.tryAutoSignIn()
     }
     
