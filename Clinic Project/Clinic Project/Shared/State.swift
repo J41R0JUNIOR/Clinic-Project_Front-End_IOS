@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum State {
+enum State{
     case logged
     case signOut
 }

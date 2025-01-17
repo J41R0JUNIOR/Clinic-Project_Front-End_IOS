@@ -11,67 +11,81 @@ struct SignInView: View {
     @Bindable var viewModel: SignIn_ViewModel
     
     var body: some View {
-        VStack{
-            Spacer()
-            
-            HStack{
-                Text("Email:")
+        ZStack{
+            VStack{
                 Spacer()
-            }
-            TextField("Type your email", text: $viewModel.username)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .textContentType(.emailAddress)
-                .textFieldStyle(.roundedBorder)
-            
-            HStack{
-                Text("Password:")
-                Spacer()
-            }
-            SecureField("type your password", text: $viewModel.password).textContentType(.password)
-                .textFieldStyle(.roundedBorder)
-            
-            HStack{
-                Button {
-                    viewModel.rememberMe.toggle()
-                } label: {
-                    HStack {
-                        Image(systemName: viewModel.rememberMe ? "checkmark.square.fill" : "square")
-                            .foregroundColor(viewModel.rememberMe ? .blue : .gray)
-                            .font(.system(size: 15))
-                    }
+                
+                HStack{
+                    Text("Email:")
+                    Spacer()
                 }
-                Text("Remember Me")
-                    .foregroundColor(.primary)
-                    .font(.subheadline)
+                TextField("Type your email", text: $viewModel.username)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .textContentType(.emailAddress)
+                    .textFieldStyle(.roundedBorder)
+                
+                HStack{
+                    Text("Password:")
+                    Spacer()
+                }
+                SecureField("type your password", text: $viewModel.password).textContentType(.password)
+                    .textFieldStyle(.roundedBorder)
+                
+                HStack{
+                    Button {
+                        viewModel.rememberMe.toggle()
+                    } label: {
+                        HStack {
+                            Image(systemName: viewModel.rememberMe ? "checkmark.square.fill" : "square")
+                                .foregroundColor(viewModel.rememberMe ? .blue : .gray)
+                                .font(.system(size: 15))
+                        }
+                    }
+                    Text("Remember Me")
+                        .foregroundColor(.primary)
+                        .font(.subheadline)
+                    
+                    Spacer()
+                }.padding()
                 
                 Spacer()
-            }.padding()
-            
-            Spacer()
-            
-            Button {
-                viewModel.signIn()
-            } label: {
+                
+                Button {
+                    viewModel.signIn()
+                } label: {
+                    HStack{
+                        Spacer()
+                        Text("Sign In")
+                        Spacer()
+                    }
+                }.buttonStyle(.borderedProminent)
+                
                 HStack{
-                    Spacer()
-                    Text("Sign In")
-                    Spacer()
+                    Text("Don't have an account?")
+                    Button("Sign Up") {
+                    }
                 }
-            }.buttonStyle(.borderedProminent)
+            }.task{
+                viewModel.tryAutoSignIn()
+                
+            }.onChange(of: viewModel.state, { _, _ in
+                viewModel.handleStateChange()
+            })
             
-            HStack{
-                Text("Don't have an account?")
-                Button("Sign Up") {
-                }
+            .padding()
+            
+            if viewModel.isRefreshing {
+                
+                Rectangle().opacity(0.6).ignoresSafeArea()
+                ProgressView("Loading...")
+                    .tint(.white)
+                    .foregroundStyle(.white)
             }
-        }.task{
-            viewModel.tryAutoSignIn()
-        }.onChange(of: viewModel.state, { _, _ in
-            viewModel.handleStateChange()
-        })
-        .padding()
+        }
+       
     }
+    
 }
 
 #Preview {

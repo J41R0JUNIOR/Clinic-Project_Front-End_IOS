@@ -12,6 +12,7 @@ import SwiftUI
 enum Destination {
     case signIn
     case doctorContent
+    case setting
 }
 
 class Routes {
@@ -26,14 +27,21 @@ class Routes {
     }
     
     func navigate(to destination: Destination) {
+        navigationController.viewControllers.removeAll()
+        
         switch destination {
+            
         case .signIn:
             let view = createSignInModule()
             navigationController.pushViewController(view, animated: true)
+
         case .doctorContent:
             let view = createDoctorContentModule()
             navigationController.pushViewController(view, animated: true)
             
+        case .setting:
+            let view = createSettingModule()
+            navigationController.pushViewController(view, animated: true)
         }
     }
     
@@ -53,6 +61,14 @@ class Routes {
     
     func createDoctorContentModule() -> UIViewController {
         let viewController = UIHostingController(rootView: DoctorContent_View().navigationBarBackButtonHidden())
+        
+        return viewController
+    }
+    
+    func createSettingModule() -> UIViewController {
+        let viewModel = Settings_ViewModel()
+        viewModel.router = self
+        let viewController = UIHostingController(rootView: Settings_View(viewModel: viewModel).navigationBarBackButtonHidden())
         
         return viewController
     }

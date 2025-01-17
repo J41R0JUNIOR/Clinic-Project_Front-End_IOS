@@ -30,6 +30,7 @@ class SignIn_Presenter: SignInPresenterProtocol {
     func userSignInFailure(error: Error) {
         DispatchQueue.main.async {
             self.viewModel?.message = error.localizedDescription
+            self.viewModel?.isRefreshing = false
         }
     }
     

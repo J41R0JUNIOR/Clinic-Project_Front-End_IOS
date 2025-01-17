@@ -29,8 +29,6 @@ class SwiftDataService {
             context.insert(login)
             do {
                 try context.save()
-//                print("data saved successfully!")
-                
             } catch {
                 print("Error saving data: \(error)")
             }
@@ -54,15 +52,31 @@ class SwiftDataService {
     }
 
     
-    func delete(login: Model.LoginUserSwiftData){
+    
+    func delete(login: Model.LoginUserSwiftData) {
         if let context = context {
             context.delete(login)
+            do {
+                try context.save()
+            } catch {
+                print("Error saving after delete: \(error)")
+            }
         }
     }
     
+    
+    
     func deleteAll() {
         if let context = context {
-            context.deletedModelsArray.forEach { context.delete($0) }
+            let descriptor = FetchDescriptor<Model.LoginUserSwiftData>()
+            do {
+                let data = try context.fetch(descriptor)
+                data.forEach { context.delete($0) }
+                
+                try context.save()
+            } catch {
+                print("Error deleting all data: \(error)")
+            }
         }
     }
 }
