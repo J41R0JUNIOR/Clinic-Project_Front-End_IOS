@@ -33,7 +33,6 @@ class SignIn_ViewModel {
         }
     }
     
-    
     func signIn() {
         isRefreshing = true
         interactor?.signIn(username: username, password: password, rememberMe: rememberMe)

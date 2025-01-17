@@ -8,8 +8,8 @@
 import Foundation
 
 protocol SignInInteractorProtocol {
-    //    func signIn(username: String, password: String)
-    //    func tryAutoSignIn(modelContainer: ModelContainer?)
+    func signIn(username: String, password: String, rememberMe: Bool)
+    func tryAutoSignIn()
 }
 
 class SignIn_Interactor: SignInInteractorProtocol {
@@ -23,7 +23,6 @@ class SignIn_Interactor: SignInInteractorProtocol {
     }
     
     func signIn(username: String, password: String, rememberMe: Bool = false) {
-        
         authWorker.authenticateUser(username: username, password: password) { result in
             switch result {
             case .success(let user):
@@ -63,5 +62,4 @@ class SignIn_Interactor: SignInInteractorProtocol {
             }
         }
     }
-    
 }
