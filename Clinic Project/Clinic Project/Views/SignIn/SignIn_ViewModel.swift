@@ -14,7 +14,7 @@ class SignIn_ViewModel {
     var password: String = ""
     var message: String = ""
     var rememberMe: Bool = false
-    var state: State = .signOut
+    var state: State = AppState.shared.state
     
     var interactor: SignIn_Interactor?
     var router: Routes?
@@ -43,7 +43,7 @@ class SignIn_ViewModel {
     
     func handleStateChange() {
         if state == .logged {
-            router?.navigate(to: .doctorContent)
+            router?.navigate(to: .setting)
             
         }
     }
