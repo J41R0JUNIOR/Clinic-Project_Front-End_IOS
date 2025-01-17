@@ -13,7 +13,6 @@ enum Destination {
     case signIn
     case doctorContent
     case setting
-    case popToRoot
 }
 
 class Routes {
@@ -28,11 +27,13 @@ class Routes {
     }
     
     func navigate(to destination: Destination) {
+        navigationController.viewControllers.removeAll()
+        
         switch destination {
         case .signIn:
             let view = createSignInModule()
             navigationController.pushViewController(view, animated: true)
-            
+
         case .doctorContent:
             let view = createDoctorContentModule()
             navigationController.pushViewController(view, animated: true)
@@ -40,11 +41,6 @@ class Routes {
         case .setting:
             let view = createSettingModule()
             navigationController.pushViewController(view, animated: true)
-        
-        case .popToRoot:
-            if navigationController.viewControllers.count > 1 {
-                navigationController.popToRootViewController(animated: true)
-            }
         }
     }
     

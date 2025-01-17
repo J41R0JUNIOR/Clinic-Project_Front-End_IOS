@@ -44,7 +44,6 @@ class SignIn_ViewModel {
     func handleStateChange() {
         if state == .logged {
             router?.navigate(to: .setting)
-            
         }
     }
 }
