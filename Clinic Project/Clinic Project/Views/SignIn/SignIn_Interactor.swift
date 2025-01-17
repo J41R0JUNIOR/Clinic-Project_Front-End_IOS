@@ -23,12 +23,10 @@ class SignIn_Interactor: SignInInteractorProtocol {
     }
     
     func signIn(username: String, password: String, rememberMe: Bool = false) {
-//        print("Authenticating user...")
         
         authWorker.authenticateUser(username: username, password: password) { result in
             switch result {
             case .success(let user):
-//                print("success \(user)")
           
                 self.presenter.userSignInSuccess(user: user)
                 
@@ -48,10 +46,6 @@ class SignIn_Interactor: SignInInteractorProtocol {
         SwiftDataService.shared.fetch { result in
             switch result {
             case .success(let users):
-//                print("User finded: \(users)")
-//                if let firstUser = users.first {
-//                    print("Username founded: \(firstUser.username)")
-//                }
                 if let firstUser = users.first {
                     self.signIn(username: firstUser.username, password: firstUser.password)
                 }

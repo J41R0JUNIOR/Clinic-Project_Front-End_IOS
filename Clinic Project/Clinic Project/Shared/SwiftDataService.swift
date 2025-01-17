@@ -54,15 +54,32 @@ class SwiftDataService {
     }
 
     
-    func delete(login: Model.LoginUserSwiftData){
+    func delete(login: Model.LoginUserSwiftData) {
         if let context = context {
             context.delete(login)
+            do {
+                try context.save()
+                print("saved delete")
+            } catch {
+                print("Error saving after delete: \(error)")
+            }
         }
     }
+
     
     func deleteAll() {
         if let context = context {
-            context.deletedModelsArray.forEach { context.delete($0) }
+            let descriptor = FetchDescriptor<Model.LoginUserSwiftData>() // Busca todos os objetos
+            do {
+                let data = try context.fetch(descriptor)
+                data.forEach { context.delete($0) }
+                
+                try context.save()
+                print("saved deleteAll")
+            } catch {
+                print("Error deleting all data: \(error)")
+            }
         }
     }
+
 }
