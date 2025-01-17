@@ -22,7 +22,38 @@ class SignIn_Interactor: SignIn_Interactor_Protocol {
         self.presenter = presenter
     }
     
+    func haveEmailAndPassword(username: String, password: String) -> Bool{
+        if username.isEmpty || username.contains("@gmail.com") == false{
+            let noUsersError = NSError(
+                domain: "CheckEmail",
+                code: 404,
+                userInfo: [NSLocalizedDescriptionKey: "Missing email"]
+            )
+            self.presenter.userSignInFailure(error: noUsersError)
+            
+            return false
+        }
+        
+        if  password.isEmpty {
+            let noUsersError = NSError(
+                domain: "CheckPassword",
+                code: 404,
+                userInfo: [NSLocalizedDescriptionKey: "Missing password"]
+            )
+            self.presenter.userSignInFailure(error: noUsersError)
+            
+            return false
+        }
+        
+        return true
+    }
+    
     func signIn(username: String, password: String, rememberMe: Bool = false) {
+        
+        if !haveEmailAndPassword(username: username, password: password) {
+            return
+        }
+        
         authWorker.authenticateUser(username: username, password: password) { result in
             switch result {
             case .success(let user):
@@ -36,7 +67,13 @@ class SignIn_Interactor: SignIn_Interactor_Protocol {
                 
             case .failure(let error):
                 print("error \(error)")
-                self.presenter.userSignInFailure(error: error)
+                
+                let noUsersError = NSError(
+                    domain: "Sign",
+                    code: 404,
+                    userInfo: [NSLocalizedDescriptionKey: "Email or Password incorrect"]
+                )
+                self.presenter.userSignInFailure(error: noUsersError)
             }
         }
     }
@@ -50,14 +87,10 @@ class SignIn_Interactor: SignIn_Interactor_Protocol {
                     return
                 }
                 
-                let noUsersError = NSError(
-                    domain: "AutoSignIn",
-                    code: 404,
-                    userInfo: [NSLocalizedDescriptionKey: "No users found in the database."]
-                )
-                self.presenter.userSignInFailure(error: noUsersError)
+                self.presenter.userSignInFailure()
             case .failure(let error):
                 print("Error looking for users: \(error)")
+                
                 self.presenter.userSignInFailure(error: error)
             }
         }

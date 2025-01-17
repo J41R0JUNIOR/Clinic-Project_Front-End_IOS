@@ -17,6 +17,7 @@ struct SignInView: View {
                     Text("Sign In").font(.title)
                     Spacer()
                 }
+                
                 Spacer()
                 
                 HStack{
@@ -26,7 +27,6 @@ struct SignInView: View {
                 
                 TextField("Type your email", text: $viewModel.username)
                     .autocapitalization(.none)
-                    .disableAutocorrection(true)
                     .textContentType(.emailAddress)
                     .textFieldStyle(.roundedBorder)
                 
@@ -35,10 +35,13 @@ struct SignInView: View {
                     Spacer()
                 }
                 
-                SecureField("type your password", text: $viewModel.password).textContentType(.password)
+                SecureField("type your password", text: $viewModel.password)
+                    .textContentType(.password)
                     .textFieldStyle(.roundedBorder)
                 
-                MarkUp_Component(rememberMe: $viewModel.rememberMe, text: "Remember me")
+                Warning_Component(message: $viewModel.apiMessage)
+                
+                CheckBox_Component(condition: $viewModel.rememberMe, text: "Remember me")
                 
                 Spacer()
                 
@@ -54,8 +57,12 @@ struct SignInView: View {
                 
                 HStack{
                     Text("Don't have an account?")
-                    Button("Sign Up") {
+                    Button {
                         viewModel.signUp()
+                    } label: {
+                        Text("Sign Up")
+//                            .foregroundStyle(.red)
+                            .bold()
                     }
                 }
             }
@@ -66,7 +73,6 @@ struct SignInView: View {
             .onChange(of: viewModel.state, { _, _ in
                 viewModel.handleStateChange()
             })
-            
             
             if viewModel.isRefreshing {
                 Rectangle()
@@ -83,5 +89,5 @@ struct SignInView: View {
 }
 
 #Preview {
-    SignInView(viewModel: .init())
+    return SignInView(viewModel: .init())
 }
