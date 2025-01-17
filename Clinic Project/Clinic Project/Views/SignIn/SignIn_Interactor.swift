@@ -7,17 +7,17 @@
 
 import Foundation
 
-protocol SignInInteractorProtocol {
+protocol SignIn_Interactor_Protocol {
     func signIn(username: String, password: String, rememberMe: Bool)
     func tryAutoSignIn()
 }
 
-class SignIn_Interactor: SignInInteractorProtocol {
+class SignIn_Interactor: SignIn_Interactor_Protocol {
     
-    private var authWorker: AuthWorker
-    var presenter: SignInPresenterProtocol
+    private var authWorker: SignIn_Worker
+    var presenter: SignIn_Presenter_Protocol
     
-    init(authWorker: AuthWorker = .init(), presenter: SignInPresenterProtocol) {
+    init(authWorker: SignIn_Worker = .init(), presenter: SignIn_Presenter_Protocol) {
         self.authWorker = authWorker
         self.presenter = presenter
     }

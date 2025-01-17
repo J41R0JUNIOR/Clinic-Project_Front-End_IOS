@@ -11,6 +11,7 @@ import SwiftUI
 
 enum Destination {
     case signIn
+    case signUp
     case doctorContent
     case setting
 }
@@ -34,6 +35,10 @@ class Routes {
         case .signIn:
             let view = createSignInModule()
             navigationController.pushViewController(view, animated: true)
+            
+        case .signUp:
+            let view = createSignUpModule()
+            navigationController.pushViewController(view, animated: true)
 
         case .doctorContent:
             let view = createDoctorContentModule()
@@ -50,6 +55,20 @@ class Routes {
         let viewController = UIHostingController(rootView: SignInView(viewModel: viewModel))
         let presenter = SignIn_Presenter(viewModel: viewModel)
         let interactor = SignIn_Interactor(presenter: presenter)
+        
+        viewModel.interactor = interactor
+        viewModel.router = self
+        presenter.viewModel = viewModel
+        interactor.presenter = presenter
+        
+        return viewController
+    }
+    
+    func createSignUpModule() -> UIViewController {
+        let viewModel = SignUp_ViewModel()
+        let viewController = UIHostingController(rootView: SignUp_View(viewModel: viewModel))
+        let presenter = SignUp_Presenter(viewModel: viewModel)
+        let interactor = SignUp_Interactor(presenter: presenter)
         
         viewModel.interactor = interactor
         viewModel.router = self
