@@ -16,6 +16,6 @@ class Settings_ViewModel {
         SwiftDataService.shared.deleteAll()
         state = .signOut
         
-        router?.navigate(to: .popToRoot)
+        router?.navigate(to: .signIn)
     }
 }
