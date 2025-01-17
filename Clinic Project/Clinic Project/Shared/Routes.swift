@@ -30,6 +30,7 @@ class Routes {
         navigationController.viewControllers.removeAll()
         
         switch destination {
+            
         case .signIn:
             let view = createSignInModule()
             navigationController.pushViewController(view, animated: true)
