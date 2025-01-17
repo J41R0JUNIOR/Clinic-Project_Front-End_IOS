@@ -13,6 +13,10 @@ struct SignInView: View {
     var body: some View {
         ZStack{
             VStack{
+                HStack{
+                    Text("Sign In").font(.title)
+                    Spacer()
+                }
                 Spacer()
                 
                 HStack{
@@ -34,23 +38,7 @@ struct SignInView: View {
                 SecureField("type your password", text: $viewModel.password).textContentType(.password)
                     .textFieldStyle(.roundedBorder)
                 
-                HStack{
-                    Button {
-                        viewModel.rememberMe.toggle()
-                    } label: {
-                        HStack {
-                            Image(systemName: viewModel.rememberMe ? "checkmark.square.fill" : "square")
-                                .foregroundColor(viewModel.rememberMe ? .blue : .gray)
-                                .font(.system(size: 15))
-                        }
-                    }
-                    
-                    Text("Remember Me")
-                        .foregroundColor(.primary)
-                        .font(.subheadline)
-                    
-                    Spacer()
-                }.padding()
+                MarkUp_Component(rememberMe: $viewModel.rememberMe, text: "Remember me")
                 
                 Spacer()
                 
@@ -67,6 +55,7 @@ struct SignInView: View {
                 HStack{
                     Text("Don't have an account?")
                     Button("Sign Up") {
+                        viewModel.signUp()
                     }
                 }
             }
@@ -80,8 +69,11 @@ struct SignInView: View {
             
             
             if viewModel.isRefreshing {
+                Rectangle()
+                    .opacity(0.7)
+                    .ignoresSafeArea()
+                    .foregroundStyle(.black)
                 
-                Rectangle().opacity(0.6).ignoresSafeArea()
                 ProgressView("Loading...")
                     .tint(.white)
                     .foregroundStyle(.white)

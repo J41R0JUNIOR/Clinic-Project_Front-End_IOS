@@ -38,6 +38,10 @@ class SignIn_ViewModel {
         interactor?.signIn(username: username, password: password, rememberMe: rememberMe)
     }
     
+    func signUp() {
+        router?.navigate(to: .signUp)
+    }
+    
     func tryAutoSignIn(){
         isRefreshing = true
         interactor?.tryAutoSignIn()

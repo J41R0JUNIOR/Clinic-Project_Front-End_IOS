@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol SignInPresenterProtocol {
+protocol SignIn_Presenter_Protocol {
     func userSignInSuccess(user: Model.SignInReturn)
     func userSignInFailure(error: Error)
     func noUserSaved()
-}
+} 
 
-class SignIn_Presenter: SignInPresenterProtocol {
+class SignIn_Presenter: SignIn_Presenter_Protocol {
     weak var viewModel: SignIn_ViewModel?
     
     init(viewModel: SignIn_ViewModel) {
