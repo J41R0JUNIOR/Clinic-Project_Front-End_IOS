@@ -19,6 +19,7 @@ struct SignInView: View {
                     Text("Email:")
                     Spacer()
                 }
+                
                 TextField("Type your email", text: $viewModel.username)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
@@ -29,6 +30,7 @@ struct SignInView: View {
                     Text("Password:")
                     Spacer()
                 }
+                
                 SecureField("type your password", text: $viewModel.password).textContentType(.password)
                     .textFieldStyle(.roundedBorder)
                 
@@ -42,6 +44,7 @@ struct SignInView: View {
                                 .font(.system(size: 15))
                         }
                     }
+                    
                     Text("Remember Me")
                         .foregroundColor(.primary)
                         .font(.subheadline)
@@ -66,14 +69,15 @@ struct SignInView: View {
                     Button("Sign Up") {
                     }
                 }
-            }.task{
+            }
+            .padding()
+            .task{
                 viewModel.tryAutoSignIn()
-                
-            }.onChange(of: viewModel.state, { _, _ in
+            }
+            .onChange(of: viewModel.state, { _, _ in
                 viewModel.handleStateChange()
             })
             
-            .padding()
             
             if viewModel.isRefreshing {
                 
@@ -83,9 +87,7 @@ struct SignInView: View {
                     .foregroundStyle(.white)
             }
         }
-       
     }
-    
 }
 
 #Preview {
