@@ -7,22 +7,22 @@
 
 import SwiftUI
 
-struct MarkUp_Component: View {
-    @Binding var rememberMe: Bool
+struct CheckBox_Component: View {
+    @Binding var condition: Bool
     var text: String
     var body: some View {
         HStack{
             Button {
-                rememberMe.toggle()
+                condition.toggle()
             } label: {
                 HStack {
-                    Image(systemName: rememberMe ? "checkmark.square.fill" : "square")
-                        .foregroundColor(rememberMe ? .blue : .gray)
+                    Image(systemName: condition ? "checkmark.square.fill" : "square")
+                        .foregroundColor(condition ? .blue : .gray)
                         .font(.system(size: 15))
                 }
             }
             
-            Text("Remember Me")
+            Text(text)
                 .foregroundColor(.primary)
                 .font(.subheadline)
             
@@ -32,5 +32,5 @@ struct MarkUp_Component: View {
 }
 
 #Preview {
-    MarkUp_Component(rememberMe: .constant(true), text: "Remember Me")
+    CheckBox_Component(condition: .constant(true), text: "Remember Me")
 }

@@ -12,7 +12,7 @@ import SwiftData
 class SignIn_ViewModel {
     var username: String = ""
     var password: String = ""
-    var message: String = ""
+    var apiMessage: String = ""
     var rememberMe: Bool = false
     var state: State = AppState.shared.state
     var isRefreshing: Bool = false
