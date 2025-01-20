@@ -59,16 +59,16 @@ enum Model {
     class LoginUserSwiftData {
         var username: String
         var password: String
-        var accessToken: String
-        var idToken: String
-        var refreshToken: String
+//        var accessToken: String
+//        var idToken: String
+//        var refreshToken: String
         
-        init(username: String, password: String, accessToken: String, idToken: String, refreshToken: String) {
+        init(username: String, password: String/*, accessToken: String, idToken: String, refreshToken: String*/) {
             self.username = username
             self.password = password
-            self.accessToken = accessToken
-            self.idToken = idToken
-            self.refreshToken = refreshToken
+//            self.accessToken = accessToken
+//            self.idToken = idToken
+//            self.refreshToken = refreshToken
         }
     }
 }

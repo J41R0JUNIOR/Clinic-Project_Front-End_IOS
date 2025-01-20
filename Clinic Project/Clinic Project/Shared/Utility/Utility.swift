@@ -27,7 +27,7 @@ class Utility{
         do {
             return try decoder.decode(T.self, from: content)
         } catch {
-            print("Decoding error: \(error)") // Ajuda na depuração.
+            print("Decoding error: \(error)")
             throw error
         }
     }
@@ -40,7 +40,6 @@ class Utility{
             transformedResponse.removeAll { char in
                 char == "\"" || char == "\\"
             }
-            
             
             return .init(transformedResponse)
         }

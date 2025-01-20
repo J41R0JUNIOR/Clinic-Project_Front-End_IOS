@@ -11,12 +11,11 @@ protocol SignUp_Interactor_Protocol {
     
 }
  
-class SignUp_Interactor: SignUp_Interactor_Protocol {
-    private var authWorker: SighUp_Worker
-    var presenter: SignUp_Presenter_Protocol
+class SignUp_Interactor: SignUp_Interactor_Protocol, InteractorProtocol {
+    private var authWorker: SighUp_Worker = .init()
+    var presenter: SignUp_Presenter
     
-    init(authWorker: SighUp_Worker = .init(), presenter: SignUp_Presenter_Protocol) {
-        self.authWorker = authWorker
+    required init(presenter: SignUp_Presenter) {
         self.presenter = presenter
     }
 }

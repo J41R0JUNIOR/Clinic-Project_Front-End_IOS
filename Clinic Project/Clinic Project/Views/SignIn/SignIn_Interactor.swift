@@ -12,13 +12,13 @@ protocol SignIn_Interactor_Protocol {
     func tryAutoSignIn()
 }
 
-class SignIn_Interactor: SignIn_Interactor_Protocol {
+class SignIn_Interactor: SignIn_Interactor_Protocol, InteractorProtocol {
+  
     
-    private var authWorker: SignIn_Worker
-    var presenter: SignIn_Presenter_Protocol
+    private var authWorker: SignIn_Worker = .init()
+    var presenter: SignIn_Presenter
     
-    init(authWorker: SignIn_Worker = .init(), presenter: SignIn_Presenter_Protocol) {
-        self.authWorker = authWorker
+    required init(presenter: SignIn_Presenter) {
         self.presenter = presenter
     }
     
@@ -58,11 +58,13 @@ class SignIn_Interactor: SignIn_Interactor_Protocol {
             switch result {
             case .success(let user):
                 
+                AccessTokens.shared.user?.accessToken = user.accessToken
+                
                 self.presenter.userSignInSuccess(user: user)
                 
                 if rememberMe{
                     SwiftDataService.shared.deleteAll()
-                    SwiftDataService.shared.save(login: .init(username: username, password: password, accessToken: "", idToken: "", refreshToken: ""))
+                    SwiftDataService.shared.save(login: Model.LoginUserSwiftData(username: username, password: password))
                 }
                 
             case .failure(let error):

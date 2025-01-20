@@ -41,10 +41,13 @@ struct SignIn_Worker: SignIn_Worker_Protocol {
         request.httpBody = encodedUser
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
+//        if let accessToken = AccessTokens.shared.accessToken {
+//            request.allHTTPHeaderFields = ["Authorization": accessToken]
+//        }
+        
         let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            print(Utility.shared.messageReceived(data: data))
             throw Errors.invalidResponse
         }
         
