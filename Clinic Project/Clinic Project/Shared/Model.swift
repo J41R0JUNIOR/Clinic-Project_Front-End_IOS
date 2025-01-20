@@ -19,6 +19,7 @@ enum Model {
     }
     
     struct SignInReturn: Codable {
+        var message: String
         var accessToken: String
         var idToken: String
         var refreshToken: String
