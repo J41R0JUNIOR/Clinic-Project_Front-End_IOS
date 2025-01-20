@@ -14,10 +14,12 @@ protocol SignIn_Presenter_Protocol {
     func noUserSaved()
 } 
 
-class SignIn_Presenter: SignIn_Presenter_Protocol {
+class SignIn_Presenter: SignIn_Presenter_Protocol, PresenterProtocol {
+//    var viewModel: SignIn_ViewModel?
+    
     weak var viewModel: SignIn_ViewModel?
     
-    init(viewModel: SignIn_ViewModel) {
+    required init(viewModel: SignIn_ViewModel) {
         self.viewModel = viewModel
     }
     

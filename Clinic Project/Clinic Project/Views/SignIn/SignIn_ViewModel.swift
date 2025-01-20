@@ -9,7 +9,8 @@ import Foundation
 import SwiftData
 
 @Observable
-class SignIn_ViewModel {
+class SignIn_ViewModel: ViewModelProtocol {    
+   
     var username: String = ""
     var password: String = ""
     var apiMessage: String = ""
@@ -22,7 +23,7 @@ class SignIn_ViewModel {
     var container: ModelContainer?
     var context: ModelContext?
     
-    init() {
+    required init() {
         do {
             container = try ModelContainer(for: Model.LoginUserSwiftData.self)
             if let container {

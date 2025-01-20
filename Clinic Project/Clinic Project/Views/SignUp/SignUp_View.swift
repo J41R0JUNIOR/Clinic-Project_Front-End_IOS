@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct SignUp_View: View {
+struct SignUp_View: View, ViewProtocol {
+    
     @Bindable var viewModel: SignUp_ViewModel
     
     var body: some View {

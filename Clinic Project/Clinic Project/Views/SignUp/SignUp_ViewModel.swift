@@ -8,9 +8,11 @@
 import Foundation
 
 @Observable
-class SignUp_ViewModel {
+class SignUp_ViewModel: ViewModelProtocol {
     var interactor: SignUp_Interactor?
     var router: Routes?
+    
+    required init() {}
     
     func backToSignIn() {
         router?.navigate(to: .signIn)

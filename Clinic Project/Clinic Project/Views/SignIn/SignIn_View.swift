@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct SignInView: View {
+struct SignInView: View, ViewProtocol {
+    
     @Bindable var viewModel: SignIn_ViewModel
     
     var body: some View {
@@ -89,5 +90,5 @@ struct SignInView: View {
 }
 
 #Preview {
-    return SignInView(viewModel: .init())
+    SignInView(viewModel: .init())
 }
