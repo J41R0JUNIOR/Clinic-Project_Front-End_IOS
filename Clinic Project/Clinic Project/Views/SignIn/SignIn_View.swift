@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SignInView: View, ViewProtocol {
+struct SignIn_View: View, ViewProtocol {
     
     @Bindable var viewModel: SignIn_ViewModel
     
@@ -29,7 +29,7 @@ struct SignInView: View, ViewProtocol {
                 TextField("Type your email", text: $viewModel.username)
                     .autocapitalization(.none)
                     .textContentType(.emailAddress)
-                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.emailAddress)
                 
                 HStack{
                     Text("Password:")
@@ -38,7 +38,6 @@ struct SignInView: View, ViewProtocol {
                 
                 SecureField("type your password", text: $viewModel.password)
                     .textContentType(.password)
-                    .textFieldStyle(.roundedBorder)
                 
                 Warning_Component(message: $viewModel.apiMessage)
                 
@@ -62,11 +61,10 @@ struct SignInView: View, ViewProtocol {
                         viewModel.signUp()
                     } label: {
                         Text("Sign Up")
-//                            .foregroundStyle(.red)
                             .bold()
                     }
                 }
-            }
+            }.textFieldStyle(.roundedBorder)
             .padding()
             .task{
                 viewModel.tryAutoSignIn()
@@ -90,5 +88,5 @@ struct SignInView: View, ViewProtocol {
 }
 
 #Preview {
-    SignInView(viewModel: .init())
+    SignIn_View(viewModel: .init())
 }

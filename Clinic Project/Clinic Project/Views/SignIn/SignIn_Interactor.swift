@@ -54,7 +54,7 @@ class SignIn_Interactor: SignIn_Interactor_Protocol, InteractorProtocol {
             return
         }
         
-        authWorker.authenticateUser(username: username, password: password) { result in
+        authWorker.signIn(username: username, password: password) { result in
             switch result {
             case .success(let user):
                 
@@ -67,8 +67,7 @@ class SignIn_Interactor: SignIn_Interactor_Protocol, InteractorProtocol {
                     SwiftDataService.shared.save(login: Model.LoginUserSwiftData(username: username, password: password))
                 }
                 
-            case .failure(let error):
-                print("error \(error)")
+            case .failure(_):
                 
                 let noUsersError = NSError(
                     domain: "Sign",

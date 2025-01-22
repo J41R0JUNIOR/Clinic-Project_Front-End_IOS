@@ -17,4 +17,20 @@ class SignUp_Presenter: SignUp_Presenter_Protocol, PresenterProtocol {
     required init(viewModel: SignUp_ViewModel) {
         self.viewModel = viewModel
     }
+    
+    func userSignUpSuccess() {
+        viewModel?.showAlert = true
+    }
+    
+    func userSignUpFailed(message: String) {
+        
+    }
+    
+    func userSignUpVerificationSuccess() {
+        viewModel?.showAlert = false
+    }
+    
+    func userSignUpVerificationFailed(message: String) {
+        
+    }
 }

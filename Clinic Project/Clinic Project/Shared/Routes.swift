@@ -34,7 +34,7 @@ class Routes {
             
         case .signIn:
             //            let view = createSignInModule()
-            let view = createModule(viewType: SignInView.self)
+            let view = createModule(viewType: SignIn_View.self)
             navigationController.pushViewController(view, animated: true)
             
         case .signUp:
@@ -53,22 +53,19 @@ class Routes {
     }
     
     func createModule<V: ViewProtocol>(viewType: V.Type) -> UIViewController
-    where V.VM: ViewModelProtocol,
-          V.VM.T: InteractorProtocol,
-          V.VM.T.P: PresenterProtocol,
-          V.VM.T.P.VM == V.VM {
+    where V.VM.T.P.VM == V.VM {
               
-              var viewModel = V.VM.init()
-              let presenter = V.VM.T.P.init(viewModel: viewModel)
-              let interactor = V.VM.T.init(presenter: presenter)
-              
-              viewModel.interactor = interactor
-              viewModel.router = self
-              
-              let view = V.init(viewModel: viewModel)
-              let viewController = UIHostingController(rootView: view)
-              
-              return viewController
+          var viewModel = V.VM.init()
+          let presenter = V.VM.T.P.init(viewModel: viewModel)
+          let interactor = V.VM.T.init(presenter: presenter)
+          
+          viewModel.interactor = interactor
+          viewModel.router = self
+          
+          let view = V.init(viewModel: viewModel)
+          let viewController = UIHostingController(rootView: view)
+          
+          return viewController
       }
     
     
