@@ -18,6 +18,12 @@ enum Model {
         var token: String?
     }
     
+    struct UserSignUp: Codable {
+        var password: String
+        var email: String
+        var confirmPassword: String
+    }
+    
     struct SignInReturn: Codable {
         var message: String
         var accessToken: String

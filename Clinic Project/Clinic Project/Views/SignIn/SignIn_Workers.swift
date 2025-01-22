@@ -10,14 +10,14 @@ import Foundation
 import Foundation
 
 protocol SignIn_Worker_Protocol {
-    func authenticateUser(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void)
+    func signIn(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void)
 }
 
 struct SignIn_Worker: SignIn_Worker_Protocol {
-    func authenticateUser(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void) {
+    func signIn(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void) {
         Task {
             do {
-                let signInReturn = try await authenticateUser(username: username, password: password)
+                let signInReturn = try await signIn(username: username, password: password)
                 completion(.success(signInReturn))
                 
             } catch {
@@ -26,7 +26,7 @@ struct SignIn_Worker: SignIn_Worker_Protocol {
         }
     }
 
-    private func authenticateUser(username: String, password: String) async throws -> Model.SignInReturn {
+    private func signIn(username: String, password: String) async throws -> Model.SignInReturn {
         let urlString = URLs.authSignIn.url
         
         guard let url = URL(string: urlString) else {
