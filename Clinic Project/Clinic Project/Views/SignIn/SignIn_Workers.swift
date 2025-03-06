@@ -25,7 +25,7 @@ struct SignIn_Worker: SignIn_Worker_Protocol {
             }
         }
     }
-
+    
     private func signIn(username: String, password: String) async throws -> Model.SignInReturn {
         let urlString = URLs.authSignIn.url
         
@@ -41,13 +41,19 @@ struct SignIn_Worker: SignIn_Worker_Protocol {
         request.httpBody = encodedUser
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-//        if let accessToken = AccessTokens.shared.accessToken {
-//            request.allHTTPHeaderFields = ["Authorization": accessToken]
-//        }
+        //        if let accessToken = AccessTokens.shared.accessToken {
+        //            request.allHTTPHeaderFields = ["Authorization": accessToken]
+        //        }
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+            let apiError = Utility.shared.messageReceived(data: data)
+            
+            if apiError.contains("User is not confirmed.") {
+                throw Errors.userNotConfirmed
+            }
+            
             throw Errors.invalidResponse
         }
         

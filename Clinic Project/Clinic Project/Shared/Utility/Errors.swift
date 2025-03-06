@@ -13,4 +13,5 @@ enum Errors: Error{
     case invalidData
     case invalidBody
     case decodingFailed
+    case userNotConfirmed
 }

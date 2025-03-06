@@ -16,22 +16,33 @@ struct CustomCodeAlert: View {
     var body: some View {
         ZStack{
             Rectangle()
-                .opacity(0.9)
+                .opacity(0.95)
                 .ignoresSafeArea()
                 .foregroundStyle(.black)
             
             VStack{
+                HStack{
+                    Text("Code")
+                        .font(.largeTitle)
+                        .foregroundStyle(.white)
+                    Spacer()
+                }
+                
                 Spacer()
                 HStack{
                     Text("Set the code:")
                         .foregroundStyle(.white)
-                    
-                    TextField("", text: $signUpCode)
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(.white)
-                        .padding(.horizontal)
-                        .border(Color.white, width: 0.5)
+                    Spacer()
                 }
+                
+                TextField("--- ---", text: $signUpCode)
+                    .keyboardType(.numberPad)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.white)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.white, lineWidth: 0.5)
+                    )
                 
                 HStack{
                     Spacer()
@@ -41,6 +52,7 @@ struct CustomCodeAlert: View {
                         
                     } label: {
                         Text("send again")
+                        
                     }
                 }
                 
@@ -58,10 +70,15 @@ struct CustomCodeAlert: View {
                 }
                 .buttonStyle(.borderedProminent)
             }.padding()
+                
         }
     }
 }
 
+//#Preview {
+//    CustomCodeAlert(signUpCode: .constant(""), showAlert: .constant(true), sendCode: {}, resendCode: {})
+//}
+
 #Preview {
-    CustomCodeAlert(signUpCode: .constant("210834"), showAlert: .constant(true), sendCode: {}, resendCode: {})
+    SignUp_View(viewModel: .init())
 }

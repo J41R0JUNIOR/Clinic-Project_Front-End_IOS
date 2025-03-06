@@ -19,7 +19,7 @@ class SignUp_ViewModel: ViewModelProtocol {
     required init() {}
     
     func backToSignIn() {
-        router?.navigate(to: .signIn)
+        router?.navigate(to: .signIn, .pop)
     }
     
     func signUp() {

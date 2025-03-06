@@ -16,7 +16,8 @@ struct SignUp_View: View, ViewProtocol {
             
             VStack{
                 HStack{
-                    Text("Sign Up").font(.title)
+                    Text("Sign Up")
+                        .font(.largeTitle)
                     Spacer()
                 }
                 
@@ -30,6 +31,7 @@ struct SignUp_View: View, ViewProtocol {
                 TextField("Type your email", text: $viewModel.user.email)
                     .autocapitalization(.none)
                     .textContentType(.emailAddress)
+                    .keyboardType(.emailAddress)
                 
                 HStack{
                     Text("Password:")

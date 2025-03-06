@@ -67,14 +67,15 @@ class SignIn_Interactor: SignIn_Interactor_Protocol, InteractorProtocol {
                     SwiftDataService.shared.save(login: Model.LoginUserSwiftData(username: username, password: password))
                 }
                 
-            case .failure(_):
-                
-                let noUsersError = NSError(
-                    domain: "Sign",
-                    code: 404,
-                    userInfo: [NSLocalizedDescriptionKey: "Email or Password incorrect"]
-                )
-                self.presenter.userSignInFailure(error: noUsersError)
+            case .failure(let error):
+                print(error)
+//                let noUsersError = NSError(
+//                    domain: "Sign",
+//                    code: 404,
+//                    userInfo: [NSLocalizedDescriptionKey: "Email or Password incorrect"]
+//                )
+//                self.presenter.userSignInFailure(error: noUsersError)
+                self.presenter.userSignInFailure(error: error)
             }
         }
     }

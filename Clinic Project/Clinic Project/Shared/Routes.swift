@@ -24,11 +24,24 @@ class Routes {
     }
     
     func start() {
-        navigate(to: .signIn)
+        navigate(to: .signIn, .push)
     }
     
-    func navigate(to destination: Destination) {
+    enum TypeTransition: String {
+        case push = "fromRight"
+        case pop = "fromLeft"
+    }
+    
+    func navigate(to destination: Destination, _ type: TypeTransition = .push) {
         navigationController.viewControllers.removeAll()
+        
+        let transition = CATransition()
+        transition.duration = 0.35
+        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        transition.type = .moveIn
+        transition.subtype = CATransitionSubtype(rawValue: type.rawValue)
+        
+        navigationController.view.layer.add(transition, forKey: nil)
         
         switch destination {
             
@@ -54,19 +67,19 @@ class Routes {
     
     func createModule<V: ViewProtocol>(viewType: V.Type) -> UIViewController
     where V.VM.T.P.VM == V.VM {
-              
-          var viewModel = V.VM.init()
-          let presenter = V.VM.T.P.init(viewModel: viewModel)
-          let interactor = V.VM.T.init(presenter: presenter)
-          
-          viewModel.interactor = interactor
-          viewModel.router = self
-          
-          let view = V.init(viewModel: viewModel)
-          let viewController = UIHostingController(rootView: view)
-          
-          return viewController
-      }
+        
+        var viewModel = V.VM.init()
+        let presenter = V.VM.T.P.init(viewModel: viewModel)
+        let interactor = V.VM.T.init(presenter: presenter)
+        
+        viewModel.interactor = interactor
+        viewModel.router = self
+        
+        let view = V.init(viewModel: viewModel)
+        let viewController = UIHostingController(rootView: view)
+        
+        return viewController
+    }
     
     
     //    func createSignInModule() -> UIViewController {

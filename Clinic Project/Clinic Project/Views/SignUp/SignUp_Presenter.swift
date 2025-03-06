@@ -23,7 +23,7 @@ class SignUp_Presenter: SignUp_Presenter_Protocol, PresenterProtocol {
     }
     
     func userSignUpFailed(message: String) {
-        
+        print("message \(message)")
     }
     
     func userSignUpVerificationSuccess() {

@@ -37,7 +37,7 @@ class SignUp_Interactor: SignUp_Interactor_Protocol, InteractorProtocol {
                 
             case .failure(let error):
                 self.presenter.userSignUpFailed(message: error.localizedDescription)
-                print("erro\(error)")
+                print("erro \(error)")
                 
             }
         })
