@@ -1,0 +1,24 @@
+{
+  "originHash" : "69e53a718bbc2ef7e404916092c58df7b9e63986c256cd5774a2948fa09f9f2c",
+  "pins" : [
+    {
+      "identity" : "aws-auth",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/J41R0JUNIOR/Aws-Auth",
+      "state" : {
+        "branch" : "main",
+        "revision" : "acfe92903cd77ea84142f5c77dfdeee206f7916f"
+      }
+    },
+    {
+      "identity" : "viewprotocol_package",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/J41R0JUNIOR/ViewProtocol_Package.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "710760369cd32837ee689b1e82bee0774f0c382e"
+      }
+    }
+  ],
+  "version" : 3
+}

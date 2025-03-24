@@ -8,28 +8,20 @@
 import Foundation
 import UIKit
 import SwiftUI
+import ViewProtocol_Package
 
-enum Destination {
-    case signIn
-    case signUp
-    case doctorContent
-    case setting
-}
 
-class Routes {
+
+class Routes: RoutesProtocol {
+    
     let navigationController: UINavigationController
     
-    init(navigationController: UINavigationController) {
+    required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
-    func start() {
-        navigate(to: .signIn, .push)
-    }
-    
-    enum TypeTransition: String {
-        case push = "fromRight"
-        case pop = "fromLeft"
+    public func start() {
+        navigate(to: .auth, .push)
     }
     
     func navigate(to destination: Destination, _ type: TypeTransition = .push) {
@@ -45,16 +37,6 @@ class Routes {
         
         switch destination {
             
-        case .signIn:
-            //            let view = createSignInModule()
-            let view = createModule(viewType: SignIn_View.self)
-            navigationController.pushViewController(view, animated: true)
-            
-        case .signUp:
-            //            let view = createSignUpModule()
-            let view = createModule(viewType: SignUp_View.self)
-            navigationController.pushViewController(view, animated: true)
-            
         case .doctorContent:
             let view = createDoctorContentModule()
             navigationController.pushViewController(view, animated: true)
@@ -62,53 +44,28 @@ class Routes {
         case .setting:
             let view = createSettingModule()
             navigationController.pushViewController(view, animated: true)
+            
+        case .auth:
+            break
         }
     }
     
-    func createModule<V: ViewProtocol>(viewType: V.Type) -> UIViewController
-    where V.VM.T.P.VM == V.VM {
+    func createModule<V: ViewProtocol, R: RoutesProtocol>(viewType: V.Type, router: R) -> UIViewController
+    where V.VM.I.P.VM == V.VM, V.VM.R == R {
+
         
         var viewModel = V.VM.init()
-        let presenter = V.VM.T.P.init(viewModel: viewModel)
-        let interactor = V.VM.T.init(presenter: presenter)
+        let presenter = V.VM.I.P.init(viewModel: viewModel)
+        let interactor = V.VM.I.init(presenter: presenter)
         
         viewModel.interactor = interactor
-        viewModel.router = self
+        viewModel.router = self as? R
         
         let view = V.init(viewModel: viewModel)
         let viewController = UIHostingController(rootView: view)
         
         return viewController
     }
-    
-    
-    //    func createSignInModule() -> UIViewController {
-    //        let viewModel = SignIn_ViewModel()
-    //        let viewController = UIHostingController(rootView: SignInView(viewModel: viewModel))
-    //        let presenter = SignIn_Presenter(viewModel: viewModel)
-    //        let interactor = SignIn_Interactor(presenter: presenter)
-    //
-    //        viewModel.interactor = interactor
-    //        viewModel.router = self
-    //        presenter.viewModel = viewModel
-    //        interactor.presenter = presenter
-    //
-    //        return viewController
-    //    }
-    
-    //    func createSignUpModule() -> UIViewController {
-    //        let viewModel = SignUp_ViewModel()
-    //        let viewController = UIHostingController(rootView: SignUp_View(viewModel: viewModel))
-    //        let presenter = SignUp_Presenter(viewModel: viewModel)
-    //        let interactor = SignUp_Interactor(presenter: presenter)
-    //
-    //        viewModel.interactor = interactor
-    //        viewModel.router = self
-    //        presenter.viewModel = viewModel
-    //        interactor.presenter = presenter
-    //
-    //        return viewController
-    //    }
     
     func createDoctorContentModule() -> UIViewController {
         let viewController = UIHostingController(rootView: DoctorContent_View().navigationBarBackButtonHidden())
@@ -123,3 +80,10 @@ class Routes {
         return viewController
     }
 }
+
+public enum Destination {
+    case doctorContent
+    case setting
+    case auth
+}
+
