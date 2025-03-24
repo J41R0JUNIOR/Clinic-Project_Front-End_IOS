@@ -49,14 +49,12 @@ class Routes: @preconcurrency RoutesProtocol {
                navigationController.pushViewController(view, animated: true)
 
            case .auth:
-//               authRouter.start()
                Auth_Aws_Package.Router.init(navigationController: navigationController).start()
            }
        }
     
     func createModule<V: ViewProtocol, R: RoutesProtocol>(viewType: V.Type, router: R) -> UIViewController
     where V.VM.I.P.VM == V.VM, V.VM.R == R {
-
         
         var viewModel = V.VM.init()
         let presenter = V.VM.I.P.init(viewModel: viewModel)
