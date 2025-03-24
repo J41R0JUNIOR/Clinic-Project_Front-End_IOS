@@ -9,46 +9,50 @@ import Foundation
 import UIKit
 import SwiftUI
 import ViewProtocol_Package
+import Auth_Aws_Package
 
-
-
-class Routes: RoutesProtocol {
+@MainActor
+class Routes: @preconcurrency RoutesProtocol {
     
     let navigationController: UINavigationController
-    
+//    let authRouter: Auth_Aws_Package.Routes
+
     required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        
+//        self.authRouter = Auth_Aws_Package.Routes(navigationController: navigationController)
+
     }
     
     public func start() {
-        navigate(to: .auth, .push)
-    }
-    
+           navigate(to: .auth, .push)
+       }
+
     func navigate(to destination: Destination, _ type: TypeTransition = .push) {
-        navigationController.viewControllers.removeAll()
-        
-        let transition = CATransition()
-        transition.duration = 0.35
-        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        transition.type = .moveIn
-        transition.subtype = CATransitionSubtype(rawValue: type.rawValue)
-        
-        navigationController.view.layer.add(transition, forKey: nil)
-        
-        switch destination {
-            
-        case .doctorContent:
-            let view = createDoctorContentModule()
-            navigationController.pushViewController(view, animated: true)
-            
-        case .setting:
-            let view = createSettingModule()
-            navigationController.pushViewController(view, animated: true)
-            
-        case .auth:
-            break
-        }
-    }
+           navigationController.viewControllers.removeAll()
+
+           let transition = CATransition()
+           transition.duration = 0.35
+           transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+           transition.type = .moveIn
+           transition.subtype = CATransitionSubtype(rawValue: type.rawValue)
+
+           navigationController.view.layer.add(transition, forKey: nil)
+
+           switch destination {
+           case .doctorContent:
+               let view = createDoctorContentModule()
+               navigationController.pushViewController(view, animated: true)
+               
+           case .setting:
+               let view = createSettingModule()
+               navigationController.pushViewController(view, animated: true)
+
+           case .auth:
+//               authRouter.start()
+               Auth_Aws_Package.Router.init(navigationController: navigationController).start()
+           }
+       }
     
     func createModule<V: ViewProtocol, R: RoutesProtocol>(viewType: V.Type, router: R) -> UIViewController
     where V.VM.I.P.VM == V.VM, V.VM.R == R {
