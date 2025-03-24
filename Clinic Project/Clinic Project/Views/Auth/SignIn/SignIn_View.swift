@@ -28,7 +28,6 @@ struct SignIn_View: View, ViewProtocol {
                 }
                 
                 TextField("Type your email", text: $viewModel.username)
-                    .autocapitalization(.none)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
                 
@@ -54,7 +53,8 @@ struct SignIn_View: View, ViewProtocol {
                         Text("Sign In")
                         Spacer()
                     }
-                }.buttonStyle(.borderedProminent)
+                }
+                .buttonStyle(.borderedProminent)
                 
                 HStack{
                     Text("Don't have an account?")
@@ -65,8 +65,11 @@ struct SignIn_View: View, ViewProtocol {
                             .bold()
                     }
                 }
-            }.textFieldStyle(.roundedBorder)
+            }
+            .textFieldStyle(.roundedBorder)
+            .autocapitalization(.none)
             .padding()
+            
             .task{
                 viewModel.tryAutoSignIn()
             }
