@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import Auth_Aws_Package
 
 @Observable
+@MainActor
 class Settings_ViewModel {
     var state: State = AppState.shared.state
     var router: Routes?
