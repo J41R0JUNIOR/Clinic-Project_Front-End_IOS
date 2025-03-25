@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
+import Auth_Aws_Package
 
 struct Decision_View: View {
     @State var router: Routes
     var body: some View {
         ZStack {
-            Color.red
+            Color.white
                 .ignoresSafeArea()
         }.onAppear {
-            router.navigate(to: .auth, .push)
-        }
+            if(AppState.shared.state == .signOut){
+                router.navigate(to: .auth, .push)
+            }
+        }.navigationBarBackButtonHidden(true) 
+            .toolbar(.hidden, for: .navigationBar)
     }
 }
 
