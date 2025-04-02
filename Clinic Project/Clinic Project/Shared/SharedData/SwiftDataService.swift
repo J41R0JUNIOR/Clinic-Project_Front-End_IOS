@@ -35,7 +35,6 @@ class SwiftDataService {
         }
     }
 
-
     func fetch(onCompletition: @escaping (Result<[Model.LoginUserSwiftData], Error>) -> Void) {
         let descriptor = FetchDescriptor<Model.LoginUserSwiftData>() // Busca todos os objetos do tipo
         
@@ -51,8 +50,6 @@ class SwiftDataService {
         }
     }
 
-    
-    
     func delete(login: Model.LoginUserSwiftData) {
         if let context = context {
             context.delete(login)
@@ -63,8 +60,6 @@ class SwiftDataService {
             }
         }
     }
-    
-    
     
     func deleteAll() {
         if let context = context {

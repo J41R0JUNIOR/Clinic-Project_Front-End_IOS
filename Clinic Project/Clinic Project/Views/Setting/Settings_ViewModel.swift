@@ -6,16 +6,17 @@
 //
 
 import Foundation
+import Auth_Aws_Package
 
 @Observable
+@MainActor
 class Settings_ViewModel {
-    var state: State = AppState.shared.state
     var router: Routes?
     
-    func backToSignIn() {
+    @MainActor func backToSignIn() {
         SwiftDataService.shared.deleteAll()
-        state = .signOut
+        AppState.shared.state = .signOut
         
-        router?.navigate(to: .signIn)
+        router?.navigate(to: .auth, .pop)
     }
 }

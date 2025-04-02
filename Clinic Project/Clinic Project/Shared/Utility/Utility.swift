@@ -22,10 +22,16 @@ class Utility{
         }
     }
     
-    func decode<T: Decodable>(content: Data) throws -> T? {
+    func decode<T: Decodable>(content: Data) throws -> T {
         let decoder = JSONDecoder()
-        return try? decoder.decode(T.self, from: content)
+        do {
+            return try decoder.decode(T.self, from: content)
+        } catch {
+            print("Decoding error: \(error)")
+            throw error
+        }
     }
+
     
     func messageReceived(data: Data) -> String{
         if let responseString = String(data: data, encoding: .utf8) {
@@ -34,7 +40,6 @@ class Utility{
             transformedResponse.removeAll { char in
                 char == "\"" || char == "\\"
             }
-            
             
             return .init(transformedResponse)
         }
