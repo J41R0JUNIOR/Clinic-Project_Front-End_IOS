@@ -12,8 +12,13 @@ struct Decision_View: View {
     @State var router: Routes
     var body: some View {
         ZStack {
-            Color.white
-                .ignoresSafeArea()
+//            Color.white
+//                .ignoresSafeArea()
+            Image("Heart")
+            
+            VStack {
+                Text("Hello, World!")
+            }
         }.onAppear {
             if(AppState.shared.state == .signOut){
                 router.navigate(to: .auth, .push)
